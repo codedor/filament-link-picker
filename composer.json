@@ -9,8 +9,8 @@
     "homepage": "https://github.com/codedor/filament-link-picker",
     "license": "MIT",
     "require": {
-        "php": "^8.0",
-        "illuminate/contracts": "^9.0",
+        "php": "^8.2",
+        "illuminate/contracts": "^10.0",
         "spatie/laravel-package-tools": "^1.12"
     },
     "require-dev": {
