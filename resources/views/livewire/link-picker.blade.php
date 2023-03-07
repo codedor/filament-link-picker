@@ -12,7 +12,9 @@
     </select>
 
     @if ($state)
-        {{ $this->form }}
+        <div wire:key="{{ $state }}">
+            {{ $this->form }}
+        </div>
     @endif
 
     <button
