@@ -1,12 +1,12 @@
 {
-    "name": ":vendor_slug/:package_slug",
-    "description": ":package_description",
+    "name": "codedor/filament-link-picker",
+    "description": "A custom field for Filament for picking routes",
     "keywords": [
-        ":vendor_name",
+        "codedor",
         "laravel",
-        ":package_slug"
+        "filament-link-picker"
     ],
-    "homepage": "https://github.com/:vendor_slug/:package_slug",
+    "homepage": "https://github.com/codedor/filament-link-picker",
     "license": "MIT",
     "require": {
         "php": "^8.2",
@@ -26,19 +26,19 @@
     },
     "autoload": {
         "psr-4": {
-            "VendorName\\Skeleton\\": "src",
-            "VendorName\\Skeleton\\Database\\Factories\\": "database/factories"
+            "Codedor\\FilamentLinkPicker\\": "src",
+            "Codedor\\FilamentLinkPicker\\Database\\Factories\\": "database/factories"
         }
     },
     "autoload-dev": {
         "psr-4": {
-            "VendorName\\Skeleton\\Tests\\": "tests"
+            "Codedor\\FilamentLinkPicker\\Tests\\": "tests"
         }
     },
     "extra": {
         "laravel": {
             "providers": [
-                "VendorName\\Skeleton\\Providers\\SkeletonServiceProvider"
+                "Codedor\\FilamentLinkPicker\\Providers\\FilamentLinkPickerServiceProvider"
             ]
         }
     },
