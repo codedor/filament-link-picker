@@ -28,7 +28,10 @@
         "psr-4": {
             "Codedor\\LinkPicker\\": "src",
             "Codedor\\LinkPicker\\Database\\Factories\\": "database/factories"
-        }
+        },
+        "files": [
+            "src/helpers.php"
+        ]
     },
     "autoload-dev": {
         "psr-4": {
