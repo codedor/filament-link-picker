@@ -1,8 +1,8 @@
 <?php
 
-namespace Codedor\FilamentLinkPicker\Tests;
+namespace Codedor\LinkPicker\Tests;
 
-use Codedor\FilamentLinkPicker\Providers\FilamentLinkPickerServiceProvider;
+use Codedor\LinkPicker\Providers\LinkPickerServiceProvider;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Orchestra\Testbench\TestCase as Orchestra;
 
@@ -13,14 +13,14 @@ class TestCase extends Orchestra
         parent::setUp();
 
         Factory::guessFactoryNamesUsing(
-            fn (string $modelName) => 'Codedor\\FilamentLinkPicker\\Database\\Factories\\' . class_basename($modelName) . 'Factory'
+            fn (string $modelName) => 'Codedor\\LinkPicker\\Database\\Factories\\' . class_basename($modelName) . 'Factory'
         );
     }
 
     protected function getPackageProviders($app)
     {
         return [
-            FilamentLinkPickerServiceProvider::class,
+            LinkPickerServiceProvider::class,
         ];
     }
 

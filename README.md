@@ -1,6 +1,6 @@
 # A custom field for Filament for picking routes
 
-## 
+##
 
 This is where your description should go. Limit it to a paragraph or two. Consider adding a small example.
 
@@ -41,8 +41,8 @@ php artisan vendor:publish --tag="filament-link-picker-views"
 ## Usage
 
 ```php
-$filamentLinkPicker = new Codedor\FilamentLinkPicker();
-echo $filamentLinkPicker->echoPhrase('Hello, Codedor!');
+$LinkPicker = new Codedor\LinkPicker();
+echo $LinkPicker->echoPhrase('Hello, Codedor!');
 ```
 
 ## Documentation

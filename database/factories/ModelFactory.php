@@ -1,6 +1,6 @@
 <?php
 
-namespace Codedor\FilamentLinkPicker\Database\Factories;
+namespace Codedor\LinkPicker\Database\Factories;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
 

@@ -1,6 +1,6 @@
 <?php
 
-// config for Codedor/FilamentLinkPicker
+// config for Codedor/LinkPicker
 return [
 
 ];

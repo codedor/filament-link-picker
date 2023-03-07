@@ -26,19 +26,19 @@
     },
     "autoload": {
         "psr-4": {
-            "Codedor\\FilamentLinkPicker\\": "src",
-            "Codedor\\FilamentLinkPicker\\Database\\Factories\\": "database/factories"
+            "Codedor\\LinkPicker\\": "src",
+            "Codedor\\LinkPicker\\Database\\Factories\\": "database/factories"
         }
     },
     "autoload-dev": {
         "psr-4": {
-            "Codedor\\FilamentLinkPicker\\Tests\\": "tests"
+            "Codedor\\LinkPicker\\Tests\\": "tests"
         }
     },
     "extra": {
         "laravel": {
             "providers": [
-                "Codedor\\FilamentLinkPicker\\Providers\\FilamentLinkPickerServiceProvider"
+                "Codedor\\LinkPicker\\Providers\\LinkPickerServiceProvider"
             ]
         }
     },
