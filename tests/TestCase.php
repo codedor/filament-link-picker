@@ -2,9 +2,9 @@
 
 namespace Codedor\FilamentLinkPicker\Tests;
 
+use Codedor\FilamentLinkPicker\Providers\FilamentLinkPickerServiceProvider;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Orchestra\Testbench\TestCase as Orchestra;
-use Codedor\FilamentLinkPicker\Providers\FilamentLinkPickerServiceProvider;
 
 class TestCase extends Orchestra
 {
