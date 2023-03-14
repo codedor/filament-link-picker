@@ -11,9 +11,9 @@ if (! function_exists('lroute')) {
         }
 
         if ($link instanceof Link) {
-            return $link->resolve($parameters);
+            return $link->build($parameters);
         }
 
-        return LinkCollection::route($link['route'])?->resolve($link['parameters']);
+        return LinkCollection::route($link['route'])?->build($link['parameters']);
     }
 }

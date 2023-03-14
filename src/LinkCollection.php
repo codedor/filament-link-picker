@@ -6,17 +6,18 @@ use Illuminate\Support\Collection;
 
 class LinkCollection extends Collection
 {
-    public function addGroup(string $name, array $items)
+    public function addGroup(string $group, iterable $links): self
     {
-        return $this->add([
-            'name' => $name,
-            'items' => $items,
-        ]);
+        foreach ($links as $link) {
+            $this->add($link->group($group));
+        }
+
+        return $this;
     }
 
     public function routes(): self
     {
-        return $this->pluck('items')->flatten();
+        return $this->flatten();
     }
 
     public function route(string $routeName): null|Link

@@ -3,18 +3,27 @@
 namespace Codedor\LinkPicker;
 
 use Closure;
+use Illuminate\Support\Collection;
+use Illuminate\Support\Str;
 
 class Link
 {
-    public null|Closure $resolveUsing = null;
+    public null|string $description = null;
+
+    public null|string $group = null;
+
+    public null|Closure $buildUsing = null;
+
+    public null|Closure $schema = null;
+
+    public array $parameters = [];
 
     public function __construct(
         public string $route,
         public null|string $label = null,
-        public null|string $description = null,
-        public array $schema = [],
     ) {
-        $this->label ??= $this->route;
+        $this->label ??= Str::of($this->route)->after('.')->title();
+        $this->group = Str::of($this->route)->before('.')->replace('-', ' ')->title();
     }
 
     public static function make(string $route, null|string $label = null): self
@@ -29,6 +38,11 @@ class Link
         return $this;
     }
 
+    public function getLabel(): string
+    {
+        return $this->label;
+    }
+
     public function description(string $description)
     {
         $this->description = $description;
@@ -36,26 +50,64 @@ class Link
         return $this;
     }
 
-    public function schema(array $schema)
+    public function getDescription(): string|null
+    {
+        return $this->description;
+    }
+
+    public function schema(Closure $schema)
     {
         $this->schema = $schema;
 
         return $this;
     }
 
-    public function resolveUsing(Closure $closure)
+    public function getSchema(): Collection
     {
-        $this->resolveUsing = $closure;
+        return Collection::wrap(
+            is_null($this->schema) ? [] : call_user_func($this->schema)
+        );
+    }
+
+    public function group(string $group): self
+    {
+        $this->group = $group;
 
         return $this;
     }
 
-    public function resolve(array $parameters = [])
+    public function getGroup(): string
     {
-        if ($this->resolveUsing) {
-            return call_user_func($this->resolveUsing, $parameters);
+        return $this->group;
+    }
+
+    public function parameters(array $parameters): self
+    {
+        $this->parameters = $parameters;
+
+        return $this;
+    }
+
+    public function getParameters(): array
+    {
+        return $this->parameters;
+    }
+
+    public function buildUsing(Closure $closure)
+    {
+        $this->buildUsing = $closure;
+
+        return $this;
+    }
+
+    public function build(array $parameters = []): string|null
+    {
+        $parameters ??= $this->parameters;
+
+        if ($this->buildUsing) {
+            return call_user_func($this->buildUsing, $this->parameters($parameters));
         }
 
-        return route("en.filament-demotest.{$this->route}", $parameters);
+        return route($this->route, $parameters);
     }
 }
