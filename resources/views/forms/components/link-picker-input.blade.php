@@ -26,6 +26,11 @@
                 })
             })
         },
+        openPicker () {
+            $dispatch('open-modal', {
+                id: 'filament-link-picker::picker-modal-{{ $getStatePath() }}'
+            })
+        },
     }">
         <div class="flex flex-col items-start gap-3">
             @if (filled($getState()))
@@ -39,25 +44,37 @@
                         {{ $route }}
                     </a>
 
+                    @if (! $isDisabled())
+                        <button
+                            type="button"
+                            class="text-gray-600 hover:text-gray-700"
+                            x-on:click.prevent="openPicker()"
+                        >
+                            <x-heroicon-o-pencil class="w-4 h-4" />
+                        </button>
+
+                        <button
+                            type="button"
+                            class="text-danger-600 hover:text-danger-700"
+                            x-on:click="state = null"
+                        >
+                            <x-heroicon-o-trash class="w-4 h-4" />
+                        </button>
+                    @endif
+                </div>
+            @else
+                @if (! $isDisabled())
                     <button
                         type="button"
-                        class="text-danger-600 hover:text-danger-700"
-                        x-on:click="state = null"
+                        class="filament-button filament-button-size-sm inline-flex items-center justify-center py-1 gap-1 font-medium rounded-lg border transition-colors outline-none focus:ring-offset-2 focus:ring-2 focus:ring-inset min-h-[2rem] px-3 text-sm text-white shadow focus:ring-white border-transparent bg-primary-600 hover:bg-primary-500 focus:bg-primary-700 focus:ring-offset-primary-700"
+                        x-on:click.prevent="openPicker()"
                     >
-                        <x-heroicon-o-trash class="w-4 h-4" />
+                        {{ __('filament-link-picker.select link') }}
                     </button>
-                </div>
+                @else
+                    <p>{{ __('filament-link-picker.no link selected') }}</p>
+                @endif
             @endif
-
-            <button
-                type="button"
-                class="filament-button filament-button-size-sm inline-flex items-center justify-center py-1 gap-1 font-medium rounded-lg border transition-colors outline-none focus:ring-offset-2 focus:ring-2 focus:ring-inset min-h-[2rem] px-3 text-sm text-white shadow focus:ring-white border-transparent bg-primary-600 hover:bg-primary-500 focus:bg-primary-700 focus:ring-offset-primary-700"
-                x-on:click.prevent="$dispatch('open-modal', {
-                    id: 'filament-link-picker::picker-modal-{{ $getStatePath() }}'
-                })"
-            >
-                {{ __('filament-link-picker.select link') }}
-            </button>
         </div>
 
         <x-filament::modal
