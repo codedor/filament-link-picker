@@ -6,7 +6,7 @@ use Codedor\LinkPicker\Link;
 if (! function_exists('lroute')) {
     function lroute(null|array|Link $link, array $parameters = []): string|null
     {
-        if (is_null($link)) {
+        if (blank($link)) {
             return null;
         }
 

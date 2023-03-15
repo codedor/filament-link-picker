@@ -6,6 +6,13 @@ use Illuminate\Support\Collection;
 
 class LinkCollection extends Collection
 {
+    public function addLink(Link $link): self
+    {
+        $this->add($link);
+
+        return $this;
+    }
+
     public function addGroup(string $group, iterable $links): self
     {
         foreach ($links as $link) {

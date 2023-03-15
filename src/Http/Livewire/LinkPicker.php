@@ -4,6 +4,9 @@ namespace Codedor\LinkPicker\Http\Livewire;
 
 use Codedor\LinkPicker\Facades\LinkCollection;
 use Filament\Forms\Components\Checkbox;
+use Filament\Forms\Components\Fieldset;
+use Filament\Forms\Components\Grid;
+use Filament\Forms\Components\Section;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Concerns\InteractsWithForms;
 use Filament\Forms\Contracts\HasForms;
@@ -18,11 +21,20 @@ class LinkPicker extends Component implements HasForms
 
     public string $statePath;
 
-    public string $state = '';
+    public null|string $description = null;
 
-    public array $parameters = [];
+    public string $route;
+    public array $parameters;
+    public bool $newTab;
 
-    public bool $newTab = false;
+    public array $initialState;
+
+    public function mount(array $state = [])
+    {
+        $this->initialState = $state;
+
+        $this->fillState($state);
+    }
 
     public function render()
     {
@@ -31,39 +43,75 @@ class LinkPicker extends Component implements HasForms
         ]);
     }
 
-    public function updatedState()
+    public function fillState(array $state = [])
     {
+        $this->parameters = $state['parameters'] ?? [];
+        $this->newTab = $state['newTab'] ?? false;
+        $this->route = $state['route'] ?? '';
+
+        $this->form->fill(['data' => [
+            'parameters' => $this->parameters,
+        ]]);
+    }
+
+    public function updatedRoute($value)
+    {
+        if (blank($value)) {
+            $this->description = null;
+        }
+
         $this->parameters = [];
         $this->newTab = false;
 
         $this->form->fill();
     }
 
-    public function submit()
+    public function cancel()
     {
-        $this->validate();
+        // Reset the form to the starting value
+        foreach ($this->initialState as $key => $value) {
+            $this->{$key} = $value;
+        }
+
+        // Close the modal
+        $this->submit(false);
+    }
+
+    public function submit(bool $updateState = true)
+    {
+        if ($updateState && filled($this->route)) {
+            $this->validate();
+        }
 
         $this->dispatchBrowserEvent('filament-link-picker.submit', [
+            'updateState' => $updateState,
             'statePath' => $this->statePath,
-            'state' => [
-                'route' => $this->state,
+            'state' => filled($this->route) ? [
+                'route' => $this->route,
                 'parameters' => $this->parameters,
                 'newTab' => $this->newTab,
-            ],
+            ] : null,
         ]);
     }
 
     protected function getFormSchema(): array
     {
-        if (empty($this->state)) {
+        if (empty($this->route)) {
             return [];
         }
 
-        $schema = LinkCollection::route($this->state)?->getSchema();
+        $link = LinkCollection::route($this->route);
+
+        if (is_null($link)) {
+            return [];
+        }
+
+        $this->description = $link->description;
+        $schema = $link->getSchema();
 
         // If the schema is empty, we'll check if there are any parameters
         if ($schema->isEmpty()) {
-            $route = Route::getRoutes()->getByName($this->state);
+            $route = Route::getRoutes()->getByName($this->route);
 
             $schema = collect($route->signatureParameters())
                 ->filter(function (ReflectionParameter $parameter) {
@@ -76,6 +124,7 @@ class LinkPicker extends Component implements HasForms
                     return Select::make("parameters.{$parameter->name}")
                         ->label(Str::title($parameter->name))
                         ->rules($parameter->allowsNull() ? '' : 'required')
+                        ->searchable()
                         ->options($model::withoutGlobalScopes()->pluck(
                             $model::$linkPickerTitleField ?? 'id',
                             (new $model)->getKeyName(),
