@@ -4,9 +4,6 @@ namespace Codedor\LinkPicker\Http\Livewire;
 
 use Codedor\LinkPicker\Facades\LinkCollection;
 use Filament\Forms\Components\Checkbox;
-use Filament\Forms\Components\Fieldset;
-use Filament\Forms\Components\Grid;
-use Filament\Forms\Components\Section;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Concerns\InteractsWithForms;
 use Filament\Forms\Contracts\HasForms;
@@ -24,7 +21,9 @@ class LinkPicker extends Component implements HasForms
     public null|string $description = null;
 
     public string $route;
+
     public array $parameters;
+
     public bool $newTab;
 
     public array $initialState;
