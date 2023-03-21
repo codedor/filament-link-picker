@@ -6,7 +6,6 @@
     </div>
 
     <div wire:loading.remove>
-        {{-- Make sure we don't submit the main form when pressing enter --}}
         <div class="flex flex-col gap-6">
             <div class="flex flex-col gap-2">
                 <label class="

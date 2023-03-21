@@ -4,7 +4,7 @@ use Codedor\LinkPicker\Facades\LinkCollection;
 use Codedor\LinkPicker\Link;
 
 if (! function_exists('lroute')) {
-    function lroute(null|array|Link $link, array $parameters = []): string|null
+    function lroute(null|array|Link $link, null|array $parameters = null): string|null
     {
         if (blank($link)) {
             return null;
@@ -14,6 +14,7 @@ if (! function_exists('lroute')) {
             return $link->build($parameters);
         }
 
-        return LinkCollection::route($link['route'])?->build($link['parameters']);
+        return LinkCollection::route($link['route'])
+            ?->build($link['parameters'] ?? []);
     }
 }

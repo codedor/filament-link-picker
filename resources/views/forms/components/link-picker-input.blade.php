@@ -35,15 +35,6 @@
         <div class="flex flex-col items-start gap-3">
             @if (filled($getState()))
                 <div class="flex gap-3 items-center">
-                    @php $route = lroute($getState()) @endphp
-                    <a
-                        href="{{ $route }}"
-                        class="bg-gray-100 hover:bg-gray-200 transition rounded text-sm px-2 py-1"
-                        target="_blank"
-                    >
-                        {{ $route }}
-                    </a>
-
                     @if (! $isDisabled())
                         <button
                             type="button"
@@ -61,6 +52,16 @@
                             <x-heroicon-o-trash class="w-4 h-4" />
                         </button>
                     @endif
+
+                    @php $route = lroute($getState()) @endphp
+
+                    <a
+                        href="{{ $route }}"
+                        class="bg-gray-100 hover:bg-gray-200 transition rounded text-sm px-2 py-1"
+                        target="_blank"
+                    >
+                        {{ $route }}
+                    </a>
                 </div>
             @else
                 @if (! $isDisabled())

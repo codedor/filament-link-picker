@@ -31,6 +31,18 @@ class Link
         return new self($route, $label);
     }
 
+    public function route(string $route)
+    {
+        $this->route = $route;
+
+        return $this;
+    }
+
+    public function getRoute(): string
+    {
+        return $this->route;
+    }
+
     public function label(string $label)
     {
         $this->label = $label;
@@ -100,9 +112,9 @@ class Link
         return $this;
     }
 
-    public function build(array $parameters = []): string|null
+    public function build(null|array $parameters = null): string|null
     {
-        $parameters ??= $this->parameters;
+        $parameters ??= $this->parameters ?? null;
 
         if ($this->buildUsing) {
             return call_user_func($this->buildUsing, $this->parameters($parameters));

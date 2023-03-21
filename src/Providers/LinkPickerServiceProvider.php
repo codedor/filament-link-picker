@@ -19,7 +19,6 @@ class LinkPickerServiceProvider extends PackageServiceProvider
         $package
             ->name('filament-link-picker')
             ->setBasePath(__DIR__ . '/../')
-            // ->hasConfigFile()
             ->hasViews('filament-link-picker');
     }
 
@@ -34,6 +33,7 @@ class LinkPickerServiceProvider extends PackageServiceProvider
     {
         Filament::serving(function () {
             Filament::registerStyles([__DIR__ . '/../../dist/css/filament-link-picker.css']);
+            Livewire::component('filament-link-picker', LinkPicker::class);
         });
 
         Route::macro('linkPicker', function (null|callable $callback = null) {
@@ -45,10 +45,6 @@ class LinkPickerServiceProvider extends PackageServiceProvider
             );
 
             return $this;
-        });
-
-        Filament::serving(function () {
-            Livewire::component('filament-link-picker', LinkPicker::class);
         });
     }
 }

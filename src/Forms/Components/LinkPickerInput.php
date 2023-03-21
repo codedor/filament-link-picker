@@ -9,14 +9,6 @@ class LinkPickerInput extends Field
 {
     protected string $view = 'filament-link-picker::forms.components.link-picker-input';
 
-    public function setUp(): void
-    {
-        // Register some listeners
-        $this->registerListeners([
-
-        ]);
-    }
-
     public function getLinkPickerOptions()
     {
         return LinkCollection::all();
@@ -24,7 +16,6 @@ class LinkPickerInput extends Field
 
     public function getState()
     {
-        // TODO: rewrite after saving code etc. has been created
         $state = parent::getState() ?? [];
 
         if (is_string($state)) {

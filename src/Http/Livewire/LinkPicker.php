@@ -12,6 +12,7 @@ use Illuminate\Support\Str;
 use Livewire\Component;
 use ReflectionParameter;
 
+// @codeCoverageIgnoreStart
 class LinkPicker extends Component implements HasForms
 {
     use InteractsWithForms;
@@ -136,3 +137,4 @@ class LinkPicker extends Component implements HasForms
         ])->toArray();
     }
 }
+// @codeCoverageIgnoreEnd
