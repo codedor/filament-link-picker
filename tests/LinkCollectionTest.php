@@ -34,7 +34,7 @@ it('can get routes', function () {
         ->first()->toBeInstanceOf(Link::class);
 });
 
-it ('can get single named route', function () {
+it('can get single named route', function () {
     $this->collection->addLink(Link::make('route.name', 'Label text'));
 
     expect($this->collection->route('route.name'))

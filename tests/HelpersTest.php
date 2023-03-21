@@ -1,7 +1,6 @@
 <?php
 
 use Codedor\LinkPicker\Link;
-use Illuminate\Support\Facades\Route;
 
 beforeEach(function () {
     registerRoute();
