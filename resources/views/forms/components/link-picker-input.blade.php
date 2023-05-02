@@ -11,27 +11,30 @@
     :required="$isRequired()"
     :state-path="$getStatePath()"
 >
-    <div x-data="{
-        state: $wire.entangle('{{ $getStatePath() }}'),
-        init () {
-            window.addEventListener('filament-link-picker.submit', (e) => {
-                if (e.detail.statePath !== '{{ $getStatePath() }}') return
+    <div
+        wire:key="filament-link-picker::picker-modal-{{ $getStatePath() }}"
+        x-data="{
+            state: $wire.entangle('{{ $getStatePath() }}'),
+            init () {
+                window.addEventListener('filament-link-picker.submit', (e) => {
+                    if (e.detail.statePath !== '{{ $getStatePath() }}') return
 
-                if (e.detail.updateState) {
-                    this.state = e.detail.state
-                }
+                    if (e.detail.updateState) {
+                        this.state = e.detail.state
+                    }
 
-                $dispatch('close-modal', {
+                    $dispatch('close-modal', {
+                        id: 'filament-link-picker::picker-modal-{{ $getStatePath() }}'
+                    })
+                })
+            },
+            openPicker () {
+                $dispatch('open-modal', {
                     id: 'filament-link-picker::picker-modal-{{ $getStatePath() }}'
                 })
-            })
-        },
-        openPicker () {
-            $dispatch('open-modal', {
-                id: 'filament-link-picker::picker-modal-{{ $getStatePath() }}'
-            })
-        },
-    }">
+            },
+        }"
+    >
         <div class="flex flex-col items-start gap-3">
             @if (filled($getState()))
                 <div class="flex gap-3 items-center">
@@ -85,6 +88,7 @@
             </x-slot>
 
             <livewire:filament-link-picker
+                wire:key="filament-link-picker::picker-modal-{{ $getStatePath() }}"
                 :state-path="$getStatePath()"
                 :state="$getState()"
             />
