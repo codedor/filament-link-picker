@@ -111,7 +111,7 @@ class LinkPicker extends Component implements HasForms
 
         // If the schema is empty, we'll check if there are any parameters
         if ($schema->isEmpty()) {
-            $route = Route::getRoutes()->getByName($this->route);
+            $route = Route::getRoutes()->getByName($link->getOriginalRoute());
 
             $schema = collect($route->signatureParameters())
                 ->filter(function (ReflectionParameter $parameter) {
