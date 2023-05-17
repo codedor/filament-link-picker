@@ -38,7 +38,6 @@ class LinkPickerServiceProvider extends PackageServiceProvider
 
         Route::macro('linkPicker', function (null|callable $callback = null) {
             /** @var \Illuminate\Routing\Route $this */
-
             $link = new Link($this->getName());
 
             FacadesLinkCollection::add(
