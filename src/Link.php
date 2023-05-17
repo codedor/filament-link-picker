@@ -3,6 +3,7 @@
 namespace Codedor\LinkPicker;
 
 use Closure;
+use Codedor\LinkPicker\Facades\LinkCollection;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Str;
 
@@ -22,6 +23,7 @@ class Link
         public string $route,
         public null|string $label = null,
     ) {
+        $this->route = Str::of($this->route)->replace(LinkCollection::getRoutePrefixes(), '')->trim('.');
         $this->label ??= Str::of($this->route)->after('.')->title();
         $this->group = Str::of($this->route)->before('.')->replace('-', ' ')->title();
     }
