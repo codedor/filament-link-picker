@@ -12,6 +12,7 @@ class Link
     public null|string $description = null;
 
     public null|string $group = null;
+
     public string $route;
 
     public null|Closure $buildUsing = null;
