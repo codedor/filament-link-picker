@@ -3,7 +3,6 @@
 namespace Codedor\LinkPicker;
 
 use Closure;
-use Codedor\LinkPicker\Facades\LinkCollection;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Str;
 
@@ -12,7 +11,6 @@ class Link
     public null|string $description = null;
 
     public null|string $group = null;
-    public string $route;
 
     public null|Closure $buildUsing = null;
 
@@ -21,10 +19,9 @@ class Link
     public array $parameters = [];
 
     public function __construct(
-        public string $originalRoute,
+        public string $route,
         public null|string $label = null,
     ) {
-        $this->route = Str::of($this->originalRoute)->replace(LinkCollection::getRoutePrefixes(), '')->trim('.');
         $this->label ??= Str::of($this->route)->after('.')->title();
         $this->group = Str::of($this->route)->before('.')->replace('-', ' ')->title();
     }
@@ -44,11 +41,6 @@ class Link
     public function getRoute(): string
     {
         return $this->route;
-    }
-
-    public function getOriginalRoute(): string
-    {
-        return $this->originalRoute;
     }
 
     public function label(string $label)
@@ -128,6 +120,6 @@ class Link
             return call_user_func($this->buildUsing, $this->parameters($parameters));
         }
 
-        return route($this->originalRoute, $parameters);
+        return route($this->route, $parameters);
     }
 }

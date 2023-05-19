@@ -15,6 +15,7 @@
         "filament/filament": "^2.0"
     },
     "require-dev": {
+        "codedor/laravel-translatable-routes": "dev-feature/make-route-caching-work",
         "laravel/pint": "^1.0",
         "nunomaduro/collision": "^7.0",
         "nunomaduro/larastan": "^2.0",
@@ -54,5 +55,11 @@
         }
     },
     "minimum-stability": "dev",
-    "prefer-stable": true
+    "prefer-stable": true,
+    "repositories": [
+        {
+            "type": "git",
+            "url": "git@github.com:codedor/laravel-translatable-routes.git"
+        }
+    ]
 }
