@@ -4,12 +4,9 @@ namespace Codedor\LinkPicker;
 
 use Closure;
 use Codedor\LocaleCollection\Facades\LocaleCollection;
-use Illuminate\Contracts\Routing\UrlRoutable;
-use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Routing\ImplicitRouteBinding;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Route;
-use Illuminate\Support\Reflector;
 use Illuminate\Support\Str;
 
 class Link
@@ -138,7 +135,6 @@ class Link
         if ($this->buildUsing) {
             return call_user_func($this->buildUsing, $this->parameters($parameters));
         }
-
 
         $route = $this->resolveParameters($parameters);
 
