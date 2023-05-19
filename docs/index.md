@@ -129,7 +129,7 @@ Route::get('blog/{category:slug}/{post:slug}', [PostController::class, 'show'])
 
             return route($link->route, [
                 'category' => $post->category,
-                'blogPost' => $post,
+                'post' => $post,
             ]);
         })
     );
