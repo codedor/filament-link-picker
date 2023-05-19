@@ -105,6 +105,11 @@ class Link
         return $this->parameters;
     }
 
+    public function getParameter(string $key): mixed
+    {
+        return $this->getParameters()[$key] ?? null;
+    }
+
     public function buildUsing(Closure $closure)
     {
         $this->buildUsing = $closure;
@@ -114,7 +119,7 @@ class Link
 
     public function build(null|array $parameters = null): string|null
     {
-        $parameters ??= $this->parameters ?? null;
+        $parameters ??= $this->getParameters();
 
         if ($this->buildUsing) {
             return call_user_func($this->buildUsing, $this->parameters($parameters));
