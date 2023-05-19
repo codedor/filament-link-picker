@@ -3,7 +3,13 @@
 namespace Codedor\LinkPicker;
 
 use Closure;
+use Codedor\LocaleCollection\Facades\LocaleCollection;
+use Illuminate\Contracts\Routing\UrlRoutable;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
+use Illuminate\Routing\ImplicitRouteBinding;
 use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Reflector;
 use Illuminate\Support\Str;
 
 class Link
@@ -22,8 +28,6 @@ class Link
         public string $route,
         public null|string $label = null,
     ) {
-        $this->label ??= Str::of($this->route)->after('.')->title();
-        $this->group = Str::of($this->route)->before('.')->replace('-', ' ')->title();
     }
 
     public static function make(string $route, null|string $label = null): self
@@ -52,7 +56,7 @@ class Link
 
     public function getLabel(): string
     {
-        return $this->label;
+        return $this->label ?? Str::of($this->getCleanRoute())->after('.')->title();
     }
 
     public function description(string $description)
@@ -90,7 +94,7 @@ class Link
 
     public function getGroup(): string
     {
-        return $this->group;
+        return $this->group ?? Str::of($this->getCleanRoute())->before('.')->replace('-', ' ')->title();
     }
 
     public function parameters(array $parameters): self
@@ -105,6 +109,11 @@ class Link
         return $this->parameters;
     }
 
+    public function getParameter(string $key): mixed
+    {
+        return $this->getParameters()[$key] ?? null;
+    }
+
     public function buildUsing(Closure $closure)
     {
         $this->buildUsing = $closure;
@@ -112,14 +121,47 @@ class Link
         return $this;
     }
 
+    public function getCleanRoute()
+    {
+        $route = Route::getRoutes()->getByName($this->route);
+        if (class_exists(LocaleCollection::class) && ($route->wheres['translatable_prefix'] ?? false)) {
+            return Str::after($this->route, $route->wheres['translatable_prefix'] . '.');
+        }
+
+        return $this->route;
+    }
+
     public function build(null|array $parameters = null): string|null
     {
-        $parameters ??= $this->parameters ?? null;
+        $parameters ??= $this->getParameters();
 
         if ($this->buildUsing) {
             return call_user_func($this->buildUsing, $this->parameters($parameters));
         }
 
+
+        $route = $this->resolveParameters($parameters);
+
+        if (function_exists('translate_route')) {
+            return translate_route($this->getCleanRoute(), null, $route->parameters);
+        }
+
         return route($this->route, $parameters);
+    }
+
+    public function resolveParameters(array $parameters)
+    {
+        $route = Route::getRoutes()->getByName($this->route);
+
+        $route->parameters = $parameters;
+        $bindings = $route->bindingFields();
+
+        $route->setBindingFields([]);
+
+        ImplicitRouteBinding::resolveForRoute(app(), $route);
+
+        $route->setBindingFields($bindings);
+
+        return $route;
     }
 }

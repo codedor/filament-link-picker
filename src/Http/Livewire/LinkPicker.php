@@ -3,6 +3,7 @@
 namespace Codedor\LinkPicker\Http\Livewire;
 
 use Codedor\LinkPicker\Facades\LinkCollection;
+use Codedor\LinkPicker\Link;
 use Filament\Forms\Components\Checkbox;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Concerns\InteractsWithForms;
@@ -39,7 +40,7 @@ class LinkPicker extends Component implements HasForms
     public function render()
     {
         return view('filament-link-picker::livewire.link-picker', [
-            'routes' => LinkCollection::unique('route')->groupBy('group'),
+            'routes' => LinkCollection::unique(fn (Link $link) =>  $link->getCleanRoute())->groupBy(fn (Link $link) =>  $link->getGroup()),
         ]);
     }
 
@@ -100,18 +101,18 @@ class LinkPicker extends Component implements HasForms
             return [];
         }
 
-        $link = LinkCollection::route($this->route);
+        $link = LinkCollection::first(fn (Link $link) => $this->route === $link->getCleanRoute());
 
         if (is_null($link)) {
             return [];
         }
 
-        $this->description = $link->description;
+        $this->description = $link->getDescription();
         $schema = $link->getSchema();
 
         // If the schema is empty, we'll check if there are any parameters
         if ($schema->isEmpty()) {
-            $route = Route::getRoutes()->getByName($link->getOriginalRoute());
+            $route = Route::getRoutes()->getByName($link->getRoute());
 
             $schema = collect($route->signatureParameters())
                 ->filter(function (ReflectionParameter $parameter) {
