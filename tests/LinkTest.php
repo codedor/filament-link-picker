@@ -45,6 +45,12 @@ it('can set and get parameters', function () {
     expect($link)->getParameters()->toBe(['key' => 'value']);
 });
 
+it('can set and get a single parameter', function () {
+    $link = Link::make('route.name')->parameters(['key' => 'value']);
+
+    expect($link)->getParameter('key')->toBe('value');
+});
+
 it('can set and get build using callback', function () {
     $link = Link::make('route.name')->buildUsing(fn () => 'build using');
 
