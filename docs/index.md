@@ -106,8 +106,8 @@ Say for example you have a route like this:
 use Illuminate\Support\Facades\Route;
 
 Route::get('blog/{category:slug}/{post:slug}', [PostController::class, 'show'])
-    ->name('post.show');
-    ->linkPicker()
+    ->name('post.show')
+    ->linkPicker();
 ```
 
 This route has two parameters but since the blogpost is linked to a category, there is no need to select the category in the link picker. You can use the `buildUsing` method to build the route for the link picker. For example:
