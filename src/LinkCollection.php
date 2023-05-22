@@ -38,6 +38,13 @@ class LinkCollection extends Collection
 
     public function route(string $routeName): null|Link
     {
-        return $this->routes()->firstWhere('route', $routeName);
+        return $this->routes()->first(function (Link $link) use ($routeName) {
+            return $link->getRouteName() === $routeName;
+        });
+    }
+
+    public function firstByCleanRouteName(string $routeName)
+    {
+        return $this->first(fn (Link $link) => $link->getCleanRouteName() === $routeName);
     }
 }

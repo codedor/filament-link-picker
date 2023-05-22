@@ -14,7 +14,7 @@ if (! function_exists('lroute')) {
             return $link->build($parameters);
         }
 
-        return LinkCollection::first(fn (Link $linkObject) => $link['route'] === $linkObject->getCleanRoute())
+        return LinkCollection::firstByCleanRouteName($link['route'])
             ?->build($link['parameters'] ?? []);
     }
 }

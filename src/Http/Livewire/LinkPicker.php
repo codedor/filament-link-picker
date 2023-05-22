@@ -44,7 +44,7 @@ class LinkPicker extends Component implements HasForms
     public function render()
     {
         return view('filament-link-picker::livewire.link-picker', [
-            'routes' => LinkCollection::unique(fn (Link $link) => $link->getCleanRoute())->groupBy(fn (Link $link) => $link->getGroup()),
+            'routes' => LinkCollection::unique(fn (Link $link) => $link->getCleanRouteName())->groupBy(fn (Link $link) => $link->getGroup()),
         ]);
     }
 
@@ -105,7 +105,7 @@ class LinkPicker extends Component implements HasForms
             return [];
         }
 
-        $link = LinkCollection::first(fn (Link $link) => $this->route === $link->getCleanRoute());
+        $link = LinkCollection::firstByCleanRouteName($this->route);
 
         if (is_null($link)) {
             return [];

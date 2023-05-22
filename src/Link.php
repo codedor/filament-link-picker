@@ -10,37 +10,37 @@ use Illuminate\Support\Str;
 
 class Link
 {
-    public null|string $description = null;
+    protected null|string $description = null;
 
-    public null|string $group = null;
+    protected null|string $group = null;
 
-    public null|Closure $buildUsing = null;
+    protected null|Closure $buildUsing = null;
 
-    public null|Closure $schema = null;
+    protected null|Closure $schema = null;
 
-    public array $parameters = [];
+    protected array $parameters = [];
 
     public function __construct(
-        public string $route,
+        public string $routeName,
         public null|string $label = null,
     ) {
     }
 
-    public static function make(string $route, null|string $label = null): self
+    public static function make(string $routeName, null|string $label = null): self
     {
-        return new self($route, $label);
+        return new self($routeName, $label);
     }
 
-    public function route(string $route)
+    public function routeName(string $routeName)
     {
-        $this->route = $route;
+        $this->routeName = $routeName;
 
         return $this;
     }
 
-    public function getRoute(): string
+    public function getRouteName(): string
     {
-        return $this->route;
+        return $this->routeName;
     }
 
     public function label(string $label)
@@ -52,7 +52,7 @@ class Link
 
     public function getLabel(): string
     {
-        return $this->label ?? Str::of($this->getCleanRoute())->after('.')->title();
+        return $this->label ?? Str::of($this->getCleanRouteName())->after('.')->title();
     }
 
     public function description(string $description)
@@ -90,7 +90,7 @@ class Link
 
     public function getGroup(): string
     {
-        return $this->group ?? Str::of($this->getCleanRoute())->before('.')->replace('-', ' ')->title();
+        return $this->group ?? Str::of($this->getCleanRouteName())->before('.')->replace('-', ' ')->title();
     }
 
     public function parameters(array $parameters): self
@@ -117,14 +117,20 @@ class Link
         return $this;
     }
 
-    public function getCleanRoute()
+    public function getCleanRouteName()
     {
-        $route = Route::getRoutes()->getByName($this->route);
+        $route = $this->getRoute();
+
         if (app(PackageChecker::class)->localeCollectionClassExists() && ($route->wheres['translatable_prefix'] ?? false)) {
-            return Str::after($this->route, $route->wheres['translatable_prefix'] . '.');
+            return Str::after($this->routeName, $route->wheres['translatable_prefix'] . '.');
         }
 
-        return $this->route;
+        return $this->routeName;
+    }
+
+    public function getRoute()
+    {
+        return Route::getRoutes()->getByName($this->routeName);
     }
 
     public function build(null|array $parameters = null): string|null
@@ -138,15 +144,15 @@ class Link
         $route = $this->resolveParameters($parameters);
 
         if (app(PackageChecker::class)->translateRouteFunctionExists()) {
-            return translate_route($this->getCleanRoute(), null, $route->parameters);
+            return translate_route($this->getCleanRouteName(), null, $route->parameters);
         }
 
-        return route($this->route, $parameters);
+        return route($this->routeName, $parameters);
     }
 
     public function resolveParameters(array $parameters)
     {
-        $route = Route::getRoutes()->getByName($this->route);
+        $route = $this->getRoute();
 
         $route->parameters = $parameters;
         $bindings = $route->bindingFields();
