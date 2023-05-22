@@ -9,11 +9,15 @@ use Filament\Forms\Components\Select;
 use Filament\Forms\Concerns\InteractsWithForms;
 use Filament\Forms\Contracts\HasForms;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Reflector;
 use Illuminate\Support\Str;
 use Livewire\Component;
 use ReflectionParameter;
 
 // @codeCoverageIgnoreStart
+/**
+ * @property-read \Filament\Forms\ComponentContainer $form
+ */
 class LinkPicker extends Component implements HasForms
 {
     use InteractsWithForms;
@@ -116,11 +120,10 @@ class LinkPicker extends Component implements HasForms
 
             $schema = collect($route->signatureParameters())
                 ->filter(function (ReflectionParameter $parameter) {
-                    // Only return classnames
-                    return $parameter->getType() && class_exists($parameter->getType()->getName());
+                    return $parameter->getType() && class_exists(Reflector::getParameterClassName($parameter));
                 })
                 ->map(function (ReflectionParameter $parameter) {
-                    $model = $parameter->getType()->getName();
+                    $model = Reflector::getParameterClassName($parameter);
 
                     return Select::make("parameters.{$parameter->name}")
                         ->label(Str::title($parameter->name))

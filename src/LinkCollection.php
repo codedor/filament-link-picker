@@ -4,6 +4,12 @@ namespace Codedor\LinkPicker;
 
 use Illuminate\Support\Collection;
 
+/**
+ * @template TKey of array-key
+ * @template TValue
+ *
+ * @extends \Illuminate\Support\Collection<TKey, TValue>
+ */
 class LinkCollection extends Collection
 {
     public function addLink(Link $link): self
@@ -22,6 +28,9 @@ class LinkCollection extends Collection
         return $this;
     }
 
+    /**
+     * @return static<TKey, TValue>
+     */
     public function routes(): self
     {
         return $this->flatten();
