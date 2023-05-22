@@ -1,7 +1,6 @@
 <?php
 
 use Codedor\LinkPicker\PackageChecker;
-use Codedor\LinkPicker\Tests\Fixtures\Http\Controllers\TestController;
 use Codedor\LinkPicker\Tests\TestCase;
 use Illuminate\Support\Facades\Route;
 use Mockery\MockInterface;
