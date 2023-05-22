@@ -1,12 +1,29 @@
 <?php
 
+use Codedor\LinkPicker\PackageChecker;
+use Codedor\LinkPicker\Tests\Fixtures\Http\Controllers\TestController;
 use Codedor\LinkPicker\Tests\TestCase;
+use Illuminate\Support\Facades\Route;
+use Mockery\MockInterface;
 
 uses(TestCase::class)->in(__DIR__);
 
 function registerRoute(): void
 {
-    Route::get('route/{parameter}', fn () => '')
+    Route::get('route/{parameter}', fn () => 'route.name')
         ->name('route.name')
         ->linkPicker();
+
+    app('router')->getRoutes()->refreshNameLookups();
+}
+
+function mockPackageChecker(): void
+{
+    test()->instance(
+        PackageChecker::class,
+        Mockery::mock(Translator::class, function (MockInterface $mock) {
+            $mock->shouldReceive('localeCollectionClassExists')->andReturn(false);
+            $mock->shouldReceive('translateRouteFunctionExists')->andReturn(false);
+        })
+    );
 }

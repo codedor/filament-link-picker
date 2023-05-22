@@ -121,7 +121,7 @@ class Link
     public function getCleanRoute()
     {
         $route = Route::getRoutes()->getByName($this->route);
-        if (class_exists(LocaleCollection::class) && ($route->wheres['translatable_prefix'] ?? false)) {
+        if (app(PackageChecker::class)->localeCollectionClassExists() && ($route->wheres['translatable_prefix'] ?? false)) {
             return Str::after($this->route, $route->wheres['translatable_prefix'] . '.');
         }
 
@@ -138,7 +138,7 @@ class Link
 
         $route = $this->resolveParameters($parameters);
 
-        if (function_exists('translate_route')) {
+        if (app(PackageChecker::class)->translateRouteFunctionExists()) {
             return translate_route($this->getCleanRoute(), null, $route->parameters);
         }
 
