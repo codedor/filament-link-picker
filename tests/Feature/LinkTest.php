@@ -1,10 +1,8 @@
 <?php
 
 use Codedor\LinkPicker\Link;
-use Codedor\LinkPicker\PackageChecker;
 use Filament\Forms\Components\TextInput;
 use Illuminate\Support\Collection;
-use Mockery\MockInterface;
 
 it('can set and get route', function () {
     $link = Link::make('route.name')->route('route.new-name');

@@ -3,7 +3,6 @@
 namespace Codedor\LinkPicker;
 
 use Closure;
-use Codedor\LocaleCollection\Facades\LocaleCollection;
 use Illuminate\Routing\ImplicitRouteBinding;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Route;
