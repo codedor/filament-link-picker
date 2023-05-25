@@ -63,16 +63,16 @@
                             href="{{ $route }}"
                         @endif
                     >
-                        {{ $route ?? __('filament-link-picker.route not found') }}
+                        {{ $route ?? __('filament-link-picker::input.route not found') }}
                     </a>
                 </div>
             @else
                 @if (! $isDisabled())
                     <x-filament::button x-on:click.prevent="openPicker()">
-                        {{ __('filament-link-picker.select link') }}
+                        {{ __('filament-link-picker::input.select link') }}
                     </x-filament::button>
                 @else
-                    <p>{{ __('filament-link-picker.no link selected') }}</p>
+                    <p>{{ __('filament-link-picker::input.no link selected') }}</p>
                 @endif
             @endif
         </div>
@@ -83,7 +83,7 @@
         >
             <x-slot name="header">
                 <x-filament::modal.heading>
-                    {{ __('filament-link-picker.select link') }}
+                    {{ __('filament-link-picker::input.select link') }}
                 </x-filament::modal.heading>
             </x-slot>
 
