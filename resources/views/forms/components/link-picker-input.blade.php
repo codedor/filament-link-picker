@@ -57,11 +57,13 @@
                     @endif
 
                     <a
-                        href="{{ lroute($getState()) }}"
                         class="bg-gray-100 hover:bg-gray-200 transition rounded text-sm px-2 py-1"
                         target="_blank"
+                        @if ($route = lroute($getState()))
+                            href="{{ $route }}"
+                        @endif
                     >
-                        {{ lroute($getState()) }}
+                        {{ $route ?? __('filament-link-picker.route not found') }}
                     </a>
                 </div>
             @else
