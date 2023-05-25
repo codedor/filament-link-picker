@@ -30,8 +30,8 @@
                     @foreach ($routes as $name => $group)
                         <optgroup label="{{ $name }}">
                             @foreach ($group as $link)
-                                <option value="{{ $link->route }}">
-                                    {{ $link->label }}
+                                <option value="{{ $link->getCleanRouteName() }}">
+                                    {{ $link->getLabel() }}
                                 </option>
                             @endforeach
                         </optgroup>

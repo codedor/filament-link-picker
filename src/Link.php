@@ -21,8 +21,8 @@ class Link
     protected array $parameters = [];
 
     public function __construct(
-        public string $routeName,
-        public null|string $label = null,
+        protected string $routeName,
+        protected null|string $label = null,
     ) {
     }
 

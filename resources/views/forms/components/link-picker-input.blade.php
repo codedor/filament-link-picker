@@ -56,14 +56,12 @@
                         </button>
                     @endif
 
-                    @php $route = lroute($getState()) @endphp
-
                     <a
-                        href="{{ $route }}"
+                        href="{{ lroute($getState()) }}"
                         class="bg-gray-100 hover:bg-gray-200 transition rounded text-sm px-2 py-1"
                         target="_blank"
                     >
-                        {{ $route }}
+                        {{ lroute($getState()) }}
                     </a>
                 </div>
             @else
