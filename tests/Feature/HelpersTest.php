@@ -10,6 +10,7 @@ beforeEach(function () {
 });
 
 it('can use lroute helper with a link object', function () {
+    mockPackageChecker();
     $link = Link::make('route.name')->parameters($this->parameters);
     $route = lroute($link);
 
@@ -17,6 +18,8 @@ it('can use lroute helper with a link object', function () {
 });
 
 it('can use lroute helper with an array', function () {
+    mockPackageChecker();
+
     $route = lroute([
         'route' => 'route.name',
         'parameters' => $this->parameters,

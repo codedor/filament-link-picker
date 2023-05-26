@@ -19,7 +19,8 @@ class LinkPickerServiceProvider extends PackageServiceProvider
         $package
             ->name('filament-link-picker')
             ->setBasePath(__DIR__ . '/../')
-            ->hasViews('filament-link-picker');
+            ->hasViews('filament-link-picker')
+            ->hasTranslations();
     }
 
     public function registeringPackage()

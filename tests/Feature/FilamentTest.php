@@ -29,5 +29,5 @@ it('can get the current state', function () {
 
     expect($this->field)
         ->getState()->toBeInstanceOf(Link::class)
-        ->getState()->getRoute()->toBe('route.name');
+        ->getState()->getRouteName()->toBe('route.name');
 });

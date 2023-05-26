@@ -12,7 +12,7 @@
                     filament-forms-field-wrapper-label inline-flex items-center
                     text-sm font-medium leading-4 text-gray-700
                 ">
-                    {{ __('filament-link-picker.chosen route') }}
+                    {{ __('filament-link-picker::picker.chosen route') }}
                 </label>
 
                 <select
@@ -24,14 +24,14 @@
                     "
                 >
                     <option value="">
-                        {{ __('filament-link-picker.choose a route') }}
+                        {{ __('filament-link-picker::picker.choose a route') }}
                     </option>
 
                     @foreach ($routes as $name => $group)
                         <optgroup label="{{ $name }}">
                             @foreach ($group as $link)
-                                <option value="{{ $link->route }}">
-                                    {{ $link->label }}
+                                <option value="{{ $link->getCleanRouteName() }}">
+                                    {{ $link->getLabel() }}
                                 </option>
                             @endforeach
                         </optgroup>
@@ -51,11 +51,11 @@
 
             <x-filament::modal.actions>
                 <x-filament::button wire:click.prevent="submit">
-                    {{ __('filament-link-picker.confirm link') }}
+                    {{ __('filament-link-picker::picker.confirm link') }}
                 </x-filament::button>
 
                 <x-filament::button wire:click.prevent="cancel" color="secondary">
-                    {{ __('filament-link-picker.cancel pick') }}
+                    {{ __('filament-link-picker::picker.cancel pick') }}
                 </x-filament::button>
             </x-filament::modal.actions>
         </div>

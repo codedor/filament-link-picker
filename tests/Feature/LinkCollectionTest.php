@@ -40,5 +40,5 @@ it('can get single named route', function () {
     expect($this->collection->route('route.name'))
         ->toBeInstanceOf(Link::class)
         ->getLabel()->toBe('Label text')
-        ->getRoute()->toBe('route.name');
+        ->getRouteName()->toBe('route.name');
 });

@@ -3,16 +3,19 @@
 namespace Codedor\LinkPicker\Http\Livewire;
 
 use Codedor\LinkPicker\Facades\LinkCollection;
+use Codedor\LinkPicker\Link;
 use Filament\Forms\Components\Checkbox;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Concerns\InteractsWithForms;
 use Filament\Forms\Contracts\HasForms;
-use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Reflector;
 use Illuminate\Support\Str;
 use Livewire\Component;
 use ReflectionParameter;
 
-// @codeCoverageIgnoreStart
+/**
+ * @property-read \Filament\Forms\ComponentContainer $form
+ */
 class LinkPicker extends Component implements HasForms
 {
     use InteractsWithForms;
@@ -38,8 +41,11 @@ class LinkPicker extends Component implements HasForms
 
     public function render()
     {
+        $routes = LinkCollection::unique(fn (Link $link) => $link->getCleanRouteName())
+            ->groupBy(fn (Link $link) => $link->getGroup());
+
         return view('filament-link-picker::livewire.link-picker', [
-            'routes' => LinkCollection::unique('route')->groupBy('group'),
+            'routes' => $routes,
         ]);
     }
 
@@ -100,26 +106,25 @@ class LinkPicker extends Component implements HasForms
             return [];
         }
 
-        $link = LinkCollection::route($this->route);
+        $link = LinkCollection::firstByCleanRouteName($this->route);
 
         if (is_null($link)) {
             return [];
         }
 
-        $this->description = $link->description;
+        $this->description = $link->getDescription();
         $schema = $link->getSchema();
 
         // If the schema is empty, we'll check if there are any parameters
         if ($schema->isEmpty()) {
-            $route = Route::getRoutes()->getByName($this->route);
+            $route = $link->getRoute();
 
             $schema = collect($route->signatureParameters())
                 ->filter(function (ReflectionParameter $parameter) {
-                    // Only return classnames
-                    return $parameter->getType() && class_exists($parameter->getType()->getName());
+                    return $parameter->getType() && class_exists(Reflector::getParameterClassName($parameter));
                 })
                 ->map(function (ReflectionParameter $parameter) {
-                    $model = $parameter->getType()->getName();
+                    $model = Reflector::getParameterClassName($parameter);
 
                     return Select::make("parameters.{$parameter->name}")
                         ->label(Str::title($parameter->name))
@@ -137,4 +142,3 @@ class LinkPicker extends Component implements HasForms
         ])->toArray();
     }
 }
-// @codeCoverageIgnoreEnd

@@ -3,44 +3,44 @@
 namespace Codedor\LinkPicker;
 
 use Closure;
+use Illuminate\Routing\ImplicitRouteBinding;
 use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Str;
 
 class Link
 {
-    public null|string $description = null;
+    protected null|string $description = null;
 
-    public null|string $group = null;
+    protected null|string $group = null;
 
-    public null|Closure $buildUsing = null;
+    protected null|Closure $buildUsing = null;
 
-    public null|Closure $schema = null;
+    protected null|Closure $schema = null;
 
-    public array $parameters = [];
+    protected array $parameters = [];
 
     public function __construct(
-        public string $route,
-        public null|string $label = null,
+        protected string $routeName,
+        protected null|string $label = null,
     ) {
-        $this->label ??= Str::of($this->route)->after('.')->title();
-        $this->group = Str::of($this->route)->before('.')->replace('-', ' ')->title();
     }
 
-    public static function make(string $route, null|string $label = null): self
+    public static function make(string $routeName, null|string $label = null): self
     {
-        return new self($route, $label);
+        return new self($routeName, $label);
     }
 
-    public function route(string $route)
+    public function routeName(string $routeName)
     {
-        $this->route = $route;
+        $this->routeName = $routeName;
 
         return $this;
     }
 
-    public function getRoute(): string
+    public function getRouteName(): string
     {
-        return $this->route;
+        return $this->routeName;
     }
 
     public function label(string $label)
@@ -52,7 +52,7 @@ class Link
 
     public function getLabel(): string
     {
-        return $this->label;
+        return $this->label ?? Str::of($this->getCleanRouteName())->after('.')->title();
     }
 
     public function description(string $description)
@@ -90,7 +90,7 @@ class Link
 
     public function getGroup(): string
     {
-        return $this->group;
+        return $this->group ?? Str::of($this->getCleanRouteName())->before('.')->replace('-', ' ')->title();
     }
 
     public function parameters(array $parameters): self
@@ -117,6 +117,22 @@ class Link
         return $this;
     }
 
+    public function getCleanRouteName()
+    {
+        $route = $this->getRoute();
+
+        if (app(PackageChecker::class)->localeCollectionClassExists() && ($route->wheres['translatable_prefix'] ?? false)) {
+            return Str::after($this->routeName, $route->wheres['translatable_prefix'] . '.');
+        }
+
+        return $this->routeName;
+    }
+
+    public function getRoute()
+    {
+        return Route::getRoutes()->getByName($this->routeName);
+    }
+
     public function build(null|array $parameters = null): string|null
     {
         $parameters ??= $this->getParameters();
@@ -125,6 +141,28 @@ class Link
             return call_user_func($this->buildUsing, $this->parameters($parameters));
         }
 
-        return route($this->route, $parameters);
+        $route = $this->resolveParameters($parameters);
+
+        if (app(PackageChecker::class)->translateRouteFunctionExists()) {
+            return translate_route($this->getCleanRouteName(), null, $route->parameters);
+        }
+
+        return route($this->routeName, $parameters);
+    }
+
+    public function resolveParameters(array $parameters)
+    {
+        $route = $this->getRoute();
+
+        $route->parameters = $parameters;
+        $bindings = $route->bindingFields();
+
+        $route->setBindingFields([]);
+
+        ImplicitRouteBinding::resolveForRoute(app(), $route);
+
+        $route->setBindingFields($bindings);
+
+        return $route;
     }
 }
