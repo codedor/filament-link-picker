@@ -56,15 +56,41 @@
                         </button>
                     @endif
 
-                    <a
-                        class="bg-gray-100 hover:bg-gray-200 transition rounded text-sm px-2 py-1"
-                        target="_blank"
-                        @if ($route = lroute($getState()))
-                            href="{{ $route }}"
+                    <ul class="bg-gray-100 hover:bg-gray-200 transition rounded text-sm px-2 py-1">
+                        @php($selection = $getSelectedDescription())
+
+                        <li>
+                            <strong>
+                                {{ __('filament-link-picker::input.selected link') }}:
+                            </strong>
+
+                            {{ $selection['label'] }}
+                        </li>
+
+                        @if (filled($selection['parameters']))
+                            <li>
+                                <strong>
+                                    {{ __('filament-link-picker::input.selected parameters') }}:
+                                </strong>
+
+                                <ul>
+                                    @foreach ($selection['parameters'] as $key => $value)
+                                        <li>
+                                            {{ ucfirst($key) }}: {{ $value }}
+                                        </li>
+                                    @endforeach
+                                </ul>
+                            </li>
                         @endif
-                    >
-                        {{ $route ?? __('filament-link-picker::input.route not found') }}
-                    </a>
+
+                        @if ($selection['newTab'] ?? false)
+                            <li>
+                                <strong>
+                                    {{ __('filament-link-picker::input.selected open in new tab') }}
+                                </strong>
+                            </li>
+                        @endif
+                    </ul>
                 </div>
             @else
                 @if (! $isDisabled())
@@ -77,6 +103,7 @@
             @endif
         </div>
 
+        <div style="height: 0; overflow: hidden">
         <x-filament::modal
             id="filament-link-picker::picker-modal-{{ $getStatePath() }}"
             width="3xl"
@@ -93,5 +120,6 @@
                 :state="$getState()"
             />
         </x-filament::modal>
+        </div>
     </div>
 </x-dynamic-component>
