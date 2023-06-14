@@ -144,7 +144,12 @@ class Link
         $route = $this->resolveParameters($parameters);
 
         if (app(PackageChecker::class)->translateRouteFunctionExists()) {
-            return translate_route($this->getCleanRouteName(), null, $route->parameters);
+            $route = translate_route($this->getCleanRouteName(), null, $route->parameters);
+
+            // If the route cannot be found as a translated route, we'll try to find a normal route
+            if (! is_null($route)) {
+                return $route;
+            }
         }
 
         return route($this->routeName, $parameters);
