@@ -130,7 +130,7 @@ class Link
 
     public function getRoute()
     {
-        return Route::getRoutes()->getByName($this->routeName);
+        return clone Route::getRoutes()->getByName($this->routeName);
     }
 
     public function build(null|array $parameters = null): string|null
@@ -142,6 +142,11 @@ class Link
         }
 
         $route = $this->resolveParameters($parameters);
+
+        // If route binding fails
+        if (! $route) {
+            return null;
+        }
 
         if (app(PackageChecker::class)->translateRouteFunctionExists()) {
             $route = translate_route($this->getCleanRouteName(), null, $route->parameters);
@@ -162,11 +167,17 @@ class Link
         $route->parameters = $parameters;
         $bindings = $route->bindingFields();
 
-        $route->setBindingFields([]);
+        try {
+            $route->setBindingFields([]);
 
-        ImplicitRouteBinding::resolveForRoute(app(), $route);
+            ImplicitRouteBinding::resolveForRoute(app(), $route);
 
-        $route->setBindingFields($bindings);
+            $route->setBindingFields($bindings);
+        } catch (\Throwable $th) {
+            report($th);
+
+            return null;
+        }
 
         return $route;
     }
