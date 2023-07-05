@@ -20,7 +20,7 @@ it('can use lroute helper with a link object', function () {
 it('can use lroute helper with an array', function () {
     mockPackageChecker();
 
-    $route = lroute([
+    $route = (string) lroute([
         'route' => 'route.name',
         'parameters' => $this->parameters,
     ]);
