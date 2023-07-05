@@ -16,6 +16,15 @@ function registerRoute(): void
     app('router')->getRoutes()->refreshNameLookups();
 }
 
+function registerRouteWithoutParameters(): void
+{
+    Route::get('route', fn () => 'route.without-parameters')
+        ->name('route.without-parameters')
+        ->linkPicker();
+
+    app('router')->getRoutes()->refreshNameLookups();
+}
+
 function mockPackageChecker(): void
 {
     test()->instance(
