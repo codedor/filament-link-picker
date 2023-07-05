@@ -44,13 +44,7 @@ if (! function_exists('parse_link_picker_json')) {
                     return '';
                 }
 
-                $url = lroute($json);
-
-                if (array_key_exists('newTab', $json) && $json['newTab']) {
-                    return $url . '" target="_blank';
-                }
-
-                return $url;
+                return lroute($json);
             },
             $content
         );
