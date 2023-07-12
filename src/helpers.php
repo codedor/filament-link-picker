@@ -5,7 +5,7 @@ use Codedor\LinkPicker\Link;
 use Illuminate\Support\HtmlString;
 
 if (! function_exists('lroute')) {
-    function lroute(null|string|array|Link $link, null|array $parameters = null, bool $withTarget = true): HtmlString|string|null
+    function lroute(null|string|array|Link $link, array $parameters = null, bool $withTarget = true): HtmlString|string|null
     {
         if (is_string($link)) {
             $link = json_decode($link, true);

@@ -10,23 +10,23 @@ use Illuminate\Support\Str;
 
 class Link
 {
-    protected null|string $description = null;
+    protected ?string $description = null;
 
-    protected null|string $group = null;
+    protected ?string $group = null;
 
-    protected null|Closure $buildUsing = null;
+    protected ?Closure $buildUsing = null;
 
-    protected null|Closure $schema = null;
+    protected ?Closure $schema = null;
 
     protected array $parameters = [];
 
     public function __construct(
         protected string $routeName,
-        protected null|string $label = null,
+        protected ?string $label = null,
     ) {
     }
 
-    public static function make(string $routeName, null|string $label = null): self
+    public static function make(string $routeName, string $label = null): self
     {
         return new self($routeName, $label);
     }
@@ -62,7 +62,7 @@ class Link
         return $this;
     }
 
-    public function getDescription(): string|null
+    public function getDescription(): ?string
     {
         return $this->description;
     }
@@ -133,7 +133,7 @@ class Link
         return clone Route::getRoutes()->getByName($this->routeName);
     }
 
-    public function build(null|array $parameters = null): string|null
+    public function build(array $parameters = null): ?string
     {
         $parameters ??= $this->getParameters();
 

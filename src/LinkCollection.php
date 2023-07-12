@@ -36,14 +36,14 @@ class LinkCollection extends Collection
         return $this->flatten();
     }
 
-    public function route(string $routeName): null|Link
+    public function route(string $routeName): ?Link
     {
         return $this->routes()->first(function (Link $link) use ($routeName) {
             return $link->getRouteName() === $routeName;
         });
     }
 
-    public function cleanRoute(string $routeName): null|Link
+    public function cleanRoute(string $routeName): ?Link
     {
         return $this->routes()->first(function (Link $link) use ($routeName) {
             return $link->getCleanRouteName() === $routeName;

@@ -37,7 +37,7 @@ class LinkPickerServiceProvider extends PackageServiceProvider
             Livewire::component('filament-link-picker', LinkPicker::class);
         });
 
-        Route::macro('linkPicker', function (null|callable $callback = null) {
+        Route::macro('linkPicker', function (callable $callback = null) {
             /** @var \Illuminate\Routing\Route $this */
             $link = new Link($this->getName());
 

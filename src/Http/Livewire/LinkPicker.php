@@ -22,7 +22,7 @@ class LinkPicker extends Component implements HasForms
 
     public string $statePath;
 
-    public null|string $description = null;
+    public ?string $description = null;
 
     public string $route;
 
