@@ -22,6 +22,10 @@ if (! function_exists('lroute')) {
         $url = LinkCollection::firstByCleanRouteName($link['route'])
             ?->build($link['parameters'] ?? []);
 
+        if (! $url) {
+            return null;
+        }
+
         if ($withTarget && ($link['newTab'] ?? false)) {
             $url .= '" target="_blank';
         }
