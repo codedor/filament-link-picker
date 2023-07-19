@@ -7,6 +7,8 @@ use Codedor\LinkPicker\Http\Livewire\LinkPicker;
 use Codedor\LinkPicker\Link;
 use Codedor\LinkPicker\LinkCollection;
 use Filament\Facades\Filament;
+use Filament\Support\Assets\Css;
+use Filament\Support\Facades\FilamentAsset;
 use Illuminate\Routing\Route;
 use Livewire\Livewire;
 use Spatie\LaravelPackageTools\Package;
@@ -32,8 +34,11 @@ class LinkPickerServiceProvider extends PackageServiceProvider
 
     public function bootingPackage()
     {
+        FilamentAsset::register([
+            Css::make('filament-link-picker-stylesheet', __DIR__ . '/../../dist/css/filament-link-picker.css'),
+        ]);
+
         Filament::serving(function () {
-            Filament::registerStyles([__DIR__ . '/../../dist/css/filament-link-picker.css']);
             Livewire::component('filament-link-picker', LinkPicker::class);
         });
 
