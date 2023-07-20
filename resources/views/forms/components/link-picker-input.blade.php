@@ -1,16 +1,4 @@
-<x-dynamic-component
-    :component="$getFieldWrapperView()"
-    :id="$getId()"
-    :label="$getLabel()"
-    :label-sr-only="$isLabelHidden()"
-    :helper-text="$getHelperText()"
-    :hint="$getHint()"
-    :hint-action="$getHintAction()"
-    :hint-color="$getHintColor()"
-    :hint-icon="$getHintIcon()"
-    :required="$isRequired()"
-    :state-path="$getStatePath()"
->
+<x-dynamic-component :component="$getFieldWrapperView()" :field="$field">
     <div
         wire:key="filament-link-picker::picker-modal-{{ $getStatePath() }}"
         x-data="{

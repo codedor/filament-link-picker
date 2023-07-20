@@ -1,6 +1,6 @@
 <div>
     <div class="w-full py-6" wire:loading>
-        <x-filament-support::loading-indicator
+        <x-filament::loading-indicator
             class="w-8 h-8 mx-auto text-primary-500"
         />
     </div>
@@ -49,15 +49,15 @@
                 </div>
             @endif
 
-            <x-filament::modal.actions>
+{{--            <x-filament::modal.actions>--}}
                 <x-filament::button wire:click.prevent="submit">
                     {{ __('filament-link-picker::picker.confirm link') }}
                 </x-filament::button>
 
-                <x-filament::button wire:click.prevent="cancel" color="secondary">
+                <x-filament::button wire:click.prevent="cancel" color="gray">
                     {{ __('filament-link-picker::picker.cancel pick') }}
                 </x-filament::button>
-            </x-filament::modal.actions>
+{{--            </x-filament::modal.actions>--}}
         </div>
     </div>
 </div>
