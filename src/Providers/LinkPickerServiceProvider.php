@@ -34,14 +34,6 @@ class LinkPickerServiceProvider extends PackageServiceProvider
 
     public function bootingPackage()
     {
-        FilamentAsset::register([
-            Css::make('filament-link-picker-stylesheet', __DIR__ . '/../../dist/css/filament-link-picker.css'),
-        ]);
-
-        Filament::serving(function () {
-            Livewire::component('filament-link-picker', LinkPicker::class);
-        });
-
         Route::macro('linkPicker', function (callable $callback = null) {
             /** @var \Illuminate\Routing\Route $this */
             $link = new Link($this->getName());
