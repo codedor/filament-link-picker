@@ -140,7 +140,7 @@ Route::get('blog/{category:slug}/{post:slug}', [PostController::class, 'show'])
 You can add the linkpicker field to your resource like this:
 
 ```php
-use Codedor\LinkPicker\Forms\Components\LinkPickerInput;
+use Codedor\LinkPicker\Filament\LinkPickerInput;
 
 public static function form(Form $form): Form
 {
