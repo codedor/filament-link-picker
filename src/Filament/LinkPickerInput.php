@@ -135,15 +135,15 @@ class LinkPickerInput extends Field
         ];
     }
 
-    private function getFormSchemaForRoute(string|null $selectedRoute): Collection
+    private function getFormSchemaForRoute(?string $selectedRoute): Collection
     {
         $routeField = Select::make('route')
             ->label('Route')
             ->options(function () {
                 return LinkCollection::values()
-                    ->unique(fn(Link $link) => $link->getCleanRouteName())
-                    ->mapWithKeys(fn(Link $link) => [
-                        $link->getCleanRouteName() => "{$link->getGroup()} - {$link->getLabel()}"
+                    ->unique(fn (Link $link) => $link->getCleanRouteName())
+                    ->mapWithKeys(fn (Link $link) => [
+                        $link->getCleanRouteName() => "{$link->getGroup()} - {$link->getLabel()}",
                     ]);
             })
             ->required()

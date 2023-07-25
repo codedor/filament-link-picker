@@ -1,7 +1,6 @@
 <?php
 
 use Codedor\LinkPicker\Filament\LinkPickerInput;
-use Codedor\LinkPicker\Link;
 use Codedor\LinkPicker\Tests\Fixtures\Forms\Livewire;
 use Codedor\LinkPicker\Tests\Fixtures\Models\TestModel;
 use Filament\Forms\ComponentContainer;
