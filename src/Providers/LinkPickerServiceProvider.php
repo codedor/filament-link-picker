@@ -3,14 +3,9 @@
 namespace Codedor\LinkPicker\Providers;
 
 use Codedor\LinkPicker\Facades\LinkCollection as FacadesLinkCollection;
-use Codedor\LinkPicker\Http\Livewire\LinkPicker;
 use Codedor\LinkPicker\Link;
 use Codedor\LinkPicker\LinkCollection;
-use Filament\Facades\Filament;
-use Filament\Support\Assets\Css;
-use Filament\Support\Facades\FilamentAsset;
 use Illuminate\Routing\Route;
-use Livewire\Livewire;
 use Spatie\LaravelPackageTools\Package;
 use Spatie\LaravelPackageTools\PackageServiceProvider;
 
