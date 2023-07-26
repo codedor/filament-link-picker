@@ -43,14 +43,16 @@ class LinkPickerInput extends Field
                         'parameters' => $get("{$statePath}.parameters") ?: [],
                     ];
 
-                    $schema->each(function (Field $field) use (&$state, $statePath, $get) {
+                    $actionNestingIndex = array_key_last($livewire->mountedFormComponentActions);
+
+                    $schema->each(function (Field $field) use (&$state, $statePath, $get, $actionNestingIndex) {
                         $fieldStatePath = $field->statePath;
 
                         data_fill(
                             $state,
                             $fieldStatePath,
                             data_get(
-                                $livewire->mountedFormComponentActionsData[0] ?? [],
+                                $livewire->mountedFormComponentActionsData[$actionNestingIndex] ?? [],
                                 "{$statePath}.{$fieldStatePath}"
                             ) ?? $get("{$statePath}.{$fieldStatePath}") ?? null
                         );
@@ -61,28 +63,30 @@ class LinkPickerInput extends Field
                 ->form(function (Get $get, Component $component, \Livewire\Component $livewire, Form $form) {
                     $statePath = $component->getStatePath(false);
 
+                    $actionNestingIndex = array_key_last($livewire->mountedFormComponentActions);
+
                     $schema = $this->getFormSchemaForRoute(
-                        $livewire->mountedFormComponentActionsData[0]['route'] ?? $get("{$statePath}.route") ?? null
+                        $livewire->mountedFormComponentActionsData[$actionNestingIndex]['route'] ?? $get("{$statePath}.route") ?? null
                     );
 
-                    $state = $livewire->mountedFormComponentActionsData[0] ?? [];
+                    $state = $livewire->mountedFormComponentActionsData[$actionNestingIndex] ?? [];
 
                     // since the fields are dynamic we have to fill the state manually,
                     // else validation will fail because property is not in the state
-                    $schema->each(function (Field $field) use (&$state, $statePath, $get) {
+                    $schema->each(function (Field $field) use (&$state, $statePath, $get, $actionNestingIndex) {
                         $fieldStatePath = $field->statePath;
 
                         data_fill(
                             $state,
                             $fieldStatePath,
                             data_get(
-                                $livewire->mountedFormComponentActionsData[0] ?? [],
+                                $livewire->mountedFormComponentActionsData[$actionNestingIndex] ?? [],
                                 "{$statePath}.{$fieldStatePath}"
                             ) ?? $get("{$statePath}.{$fieldStatePath}") ?? null
                         );
                     });
 
-                    $livewire->mountedFormComponentActionsData[0] = $state;
+                    $livewire->mountedFormComponentActionsData[$actionNestingIndex] = $state;
                     $form->fill($state);
 
                     return $schema->toArray();
