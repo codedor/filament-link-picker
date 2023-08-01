@@ -1,4 +1,3 @@
-
 <x-dynamic-component :component="$getFieldWrapperView()" :field="$field">
     <div class="flex gap-3 items-center">
         {{ $getAction('link-picker-modal') }}

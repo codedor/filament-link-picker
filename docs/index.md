@@ -8,6 +8,26 @@ Install this package using composer:
 composer require codedor/filament-link-picker
 ```
 
+In an effort to align with Filament's theming methodology you will need to use a custom theme to use this plugin.
+
+> **Note**
+> If you have not set up a custom theme and are using a Panel follow the instructions in the [Filament Docs](https://filamentphp.com/docs/3.x/panels/themes#creating-a-custom-theme) first. The following applies to both the Panels Package and the standalone Forms package.
+
+1. Import the plugin's stylesheet (if not already included) into your theme's css file.
+
+```css
+@import '../../../../vendor/codedor/filament-link-picker/resources/css/plugin.css';
+```
+
+2. Add the plugin's views to your `tailwind.config.js` file.
+
+```js
+content: [
+    ...
+    './vendor/codedor/filament-link-picker/resources/**/*.blade.php',
+]
+```
+
 ## Basic usage, simple routes without parameters
 
 The package adds a `linkPicker()` macro to the Route facade of Laravel, this means you can use it in your routes files like this:
