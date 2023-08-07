@@ -28,7 +28,10 @@ class LinkPickerInput extends Field
 
         $this->registerActions([
             Action::make('link-picker-modal')
-                ->label(fn ($state) => $state ? 'Edit' : 'Add')
+                ->label(fn ($state) => $state
+                    ? __('filament-link-picker::input.edit link')
+                    : __('filament-link-picker::input.select link')
+                )
                 ->icon(fn ($state) => $state ? 'heroicon-o-pencil' : 'heroicon-o-plus')
                 ->color('gray')
                 ->iconSize('sm')
@@ -96,7 +99,7 @@ class LinkPickerInput extends Field
                 }),
 
             Action::make('link-picker-clear')
-                ->label('Delete')
+                ->label(__('filament-link-picker::input.remove link'))
                 ->icon('heroicon-o-trash')
                 ->iconSize('sm')
                 ->color('danger')
@@ -142,7 +145,7 @@ class LinkPickerInput extends Field
     private function getFormSchemaForRoute(?string $selectedRoute): Collection
     {
         $routeField = Select::make('route')
-            ->label('Route')
+            ->label(__('filament-link-picker::input.route label'))
             ->options(function () {
                 return LinkCollection::values()
                     ->unique(fn (Link $link) => $link->getCleanRouteName())
@@ -189,6 +192,9 @@ class LinkPickerInput extends Field
 
         return $schema
             ->prepend($routeField)
-            ->add(Checkbox::make('newTab')->label('Open in a new tab'));
+            ->add(
+                Checkbox::make('newTab')
+                    ->label(__('filament-link-picker::input.new tab label'))
+            );
     }
 }
