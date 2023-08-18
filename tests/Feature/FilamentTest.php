@@ -1,7 +1,6 @@
 <?php
 
-use Codedor\LinkPicker\Forms\Components\LinkPickerInput;
-use Codedor\LinkPicker\Link;
+use Codedor\LinkPicker\Filament\LinkPickerInput;
 use Codedor\LinkPicker\Tests\Fixtures\Forms\Livewire;
 use Codedor\LinkPicker\Tests\Fixtures\Models\TestModel;
 use Filament\Forms\ComponentContainer;
@@ -12,22 +11,19 @@ beforeEach(function () {
         ->model(TestModel::class);
 });
 
-it('can set and get the options', function () {
-    expect($this->field)->getLinkPickerOptions()->toHaveCount(0);
-
-    registerRoute();
-
-    expect($this->field)->getLinkPickerOptions()->toHaveCount(1);
-});
-
 it('can get the current state', function () {
     registerRoute();
 
-    $this->field->getLivewire()->form->fill([
-        'link' => 'route.name',
+    $this->field->state([
+        'route' => 'route.name',
+        'parameters' => [],
+        'newTab' => false,
     ]);
 
     expect($this->field)
-        ->getState()->toBeInstanceOf(Link::class)
-        ->getState()->getRouteName()->toBe('route.name');
+        ->getRouteDescription()->toBe([
+            'label' => 'Name',
+            'parameters' => [],
+            'newTab' => false,
+        ]);
 });

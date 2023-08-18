@@ -3,4 +3,12 @@ parameters:
 		-
 			message: "#^Access to an undefined static property Illuminate\\\\Database\\\\Eloquent\\\\Model\\:\\:\\$linkPickerTitleField\\.$#"
 			count: 1
-			path: src/Forms/Components/LinkPickerInput.php
+			path: src/Filament/LinkPickerInput.php
+		-
+			message: "#^Access to an undefined property Livewire\\\\Component\\:\\:\\$mountedFormComponentActions\\.$#"
+			count: 2
+			path: src/Filament/LinkPickerInput.php
+		-
+			message: "#^Access to an undefined property Livewire\\\\Component\\:\\:\\$mountedFormComponentActionsData\\.$#"
+			count: 1
+			path: src/Filament/LinkPickerInput.php

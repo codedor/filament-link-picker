@@ -12,10 +12,10 @@
         "php": "^8.2",
         "illuminate/contracts": "^10.0",
         "spatie/laravel-package-tools": "^1.12",
-        "filament/filament": "^2.0"
+        "filament/filament": "^3.0"
     },
     "require-dev": {
-        "codedor/laravel-translatable-routes": "dev-feature/make-route-caching-work",
+        "codedor/laravel-translatable-routes": "^0.1",
         "laravel/pint": "^1.0",
         "nunomaduro/collision": "^7.0",
         "nunomaduro/larastan": "^2.0",
@@ -55,11 +55,5 @@
         }
     },
     "minimum-stability": "dev",
-    "prefer-stable": true,
-    "repositories": [
-        {
-            "type": "git",
-            "url": "git@github.com:codedor/laravel-translatable-routes.git"
-        }
-    ]
+    "prefer-stable": true
 }
