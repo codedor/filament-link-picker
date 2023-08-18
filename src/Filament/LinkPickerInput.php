@@ -48,7 +48,7 @@ class LinkPickerInput extends Field
 
                     $actionNestingIndex = array_key_last($livewire->mountedFormComponentActions);
 
-                    $schema->each(function (Field $field) use (&$state, $statePath, $get, $actionNestingIndex) {
+                    $schema->each(function (Field $field) use (&$state, $statePath, $get, $actionNestingIndex, $livewire) {
                         $fieldStatePath = $field->statePath;
 
                         data_fill(
@@ -76,7 +76,7 @@ class LinkPickerInput extends Field
 
                     // since the fields are dynamic we have to fill the state manually,
                     // else validation will fail because property is not in the state
-                    $schema->each(function (Field $field) use (&$state, $statePath, $get, $actionNestingIndex) {
+                    $schema->each(function (Field $field) use (&$state, $statePath, $get, $actionNestingIndex, $livewire) {
                         $fieldStatePath = $field->statePath;
 
                         data_fill(
