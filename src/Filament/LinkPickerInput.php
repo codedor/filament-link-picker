@@ -174,7 +174,11 @@ class LinkPickerInput extends Field
 
             $schema = collect($route->signatureParameters())
                 ->filter(function (ReflectionParameter $parameter) {
-                    return $parameter->getType() && class_exists(Reflector::getParameterClassName($parameter));
+                    $className = Reflector::getParameterClassName($parameter);
+
+                    return $parameter->getType()
+                        && class_exists($className)
+                        && is_subclass_of($className, Model::class);
                 })
                 ->map(function (ReflectionParameter $parameter) {
                     $model = Reflector::getParameterClassName($parameter);
@@ -182,7 +186,7 @@ class LinkPickerInput extends Field
                     return Select::make("parameters.{$parameter->name}")
                         ->label(Str::title($parameter->name))
                         ->required(! $parameter->allowsNull())
-                        ->searchable(false) //disabled because we get alpine errors
+                        ->searchable()
                         ->options($model::withoutGlobalScopes()->pluck(
                             $model::$linkPickerTitleField ?? 'id',
                             (new $model)->getKeyName(),
