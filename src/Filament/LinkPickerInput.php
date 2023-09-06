@@ -149,9 +149,11 @@ class LinkPickerInput extends Field
             ->options(function () {
                 return LinkCollection::values()
                     ->unique(fn (Link $link) => $link->getCleanRouteName())
-                    ->mapWithKeys(fn (Link $link) => [
+                    ->groupBy(fn (Link $link) => $link->getGroup())
+                    ->sortKeys()
+                    ->map(fn (Collection $links) => $links->mapWithKeys(fn (Link $link) => [
                         $link->getCleanRouteName() => "{$link->getGroup()} - {$link->getLabel()}",
-                    ]);
+                    ]));
             })
             ->required()
             ->live();
