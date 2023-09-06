@@ -3,6 +3,7 @@
 namespace Codedor\LinkPicker;
 
 use Closure;
+use Filament\Forms\Components\Field;
 use Illuminate\Routing\ImplicitRouteBinding;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Route;
@@ -76,9 +77,13 @@ class Link
 
     public function getSchema(): Collection
     {
-        return Collection::wrap(
+        $schema = Collection::wrap(
             is_null($this->schema) ? [] : call_user_func($this->schema)
         );
+
+        return $schema->map(fn (Field $field) => $field->statePath(
+            "parameters.{$field->getName()}"
+        ));
     }
 
     public function group(string $group): self

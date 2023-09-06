@@ -70,14 +70,12 @@ use Illuminate\Support\Facades\Route;
 Route::get('{page:slug}', [PageController::class, 'show'])
     ->name('page.show')
     ->linkPicker(fn (Link $link) => $link->schema(fn () => [
-            Filament\Forms\Components\Select::make('parameters.slug')
+            Filament\Forms\Components\Select::make('slug')
                 ->options(Page::pluck('name', 'id'))
                 ->multiple(),
         ])
     );
 ```
-
-Important note: parameters should be prefixed by `parameters.` in the schema.
 
 ### Label
 
@@ -140,7 +138,7 @@ Route::get('blog/{category:slug}/{post:slug}', [PostController::class, 'show'])
     ->name('post.show');
     ->linkPicker(fn (Link $link) => $link
         ->schema(fn () => [
-            Filament\Forms\Components\Select::make('parameters.post')
+            Filament\Forms\Components\Select::make('post')
                 ->options(BlogPost::pluck('title', 'id'))
                 ->multiple(),
         ])

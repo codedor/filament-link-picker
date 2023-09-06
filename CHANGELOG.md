@@ -5,6 +5,20 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## v0.1.3 - 2023-09-06
+
+## What's Changed
+* No more need to use `parameters.` in fields when building custom schemas
+
+**Full Changelog**: https://github.com/codedor/filament-link-picker/compare/v0.1.2...v0.1.3
+
+## v0.1.2 - 2023-09-06
+
+## What's Changed
+* Group link picker options in the groups
+
+**Full Changelog**: https://github.com/codedor/filament-link-picker/compare/v0.1.1...v0.1.2
+
 ## v0.1.1 - 2023-09-05
 
 ## What's Changed
