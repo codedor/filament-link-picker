@@ -8,21 +8,24 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## v0.1.3 - 2023-09-06
 
 ## What's Changed
-* No more need to use `parameters.` in fields when building custom schemas
+
+- No more need to use `parameters.` in fields when building custom schemas
 
 **Full Changelog**: https://github.com/codedor/filament-link-picker/compare/v0.1.2...v0.1.3
 
 ## v0.1.2 - 2023-09-06
 
-## What's Changed
-* Group link picker options in the groups
+### What's Changed
+
+- Group link picker options in the groups
 
 **Full Changelog**: https://github.com/codedor/filament-link-picker/compare/v0.1.1...v0.1.2
 
 ## v0.1.1 - 2023-09-05
 
 ## What's Changed
-* Make sure we are using models when building the schema
+
+- Make sure we are using models when building the schema
 
 **Full Changelog**: https://github.com/codedor/filament-link-picker/compare/v0.1.0...v0.1.1
 
