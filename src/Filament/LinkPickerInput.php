@@ -152,7 +152,7 @@ class LinkPickerInput extends Field
                     ->groupBy(fn (Link $link) => $link->getGroup())
                     ->sortKeys()
                     ->map(fn (Collection $links) => $links->mapWithKeys(fn (Link $link) => [
-                        $link->getCleanRouteName() => "{$link->getGroup()} - {$link->getLabel()}",
+                        $link->getCleanRouteName() => $link->getLabel(),
                     ]));
             })
             ->required()
