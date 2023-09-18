@@ -10,7 +10,7 @@
                         {{ __('filament-link-picker::input.selected link') }}:
                     </strong>
 
-                    {{ $routeDescription['label'] ?? '' }}
+                    {{ $routeDescription['group'] ? $routeDescription['group'] . ' >' : '' }} {{ $routeDescription['label'] ?? '' }}
                 </li>
 
                 @if(! empty($routeDescription['parameters']))

@@ -136,6 +136,7 @@ class LinkPickerInput extends Field
         }
 
         return [
+            'group' => $route->getGroup(),
             'label' => $route->getLabel(),
             'parameters' => $parameters,
             'newTab' => $state['newTab'] ?? false,
