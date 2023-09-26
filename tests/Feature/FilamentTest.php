@@ -22,6 +22,7 @@ it('can get the current state', function () {
 
     expect($this->field)
         ->getRouteDescription()->toBe([
+            'group' => 'Route',
             'label' => 'Name',
             'parameters' => [],
             'newTab' => false,
