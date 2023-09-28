@@ -135,7 +135,9 @@ class Link
 
     public function getRoute()
     {
-        return clone Route::getRoutes()->getByName($this->routeName);
+        $route = Route::getRoutes()->getByName($this->routeName);
+
+        return $route ? clone $route : optional();
     }
 
     public function build(array $parameters = null): ?string

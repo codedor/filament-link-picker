@@ -2,7 +2,9 @@
 
 namespace Codedor\LinkPicker;
 
+use Filament\Forms\Components\TextInput;
 use Illuminate\Support\Collection;
+use Illuminate\Support\Str;
 
 /**
  * @template TKey of array-key
@@ -28,9 +30,21 @@ class LinkCollection extends Collection
         return $this;
     }
 
-    /**
-     * @return static<TKey, TValue>
-     */
+    public function addExternalLink(): self
+    {
+        return $this->addLink(
+            Link::make('external', 'External URL')
+                ->group('General')
+                ->description('Redirects to an external URL')
+                ->schema(fn () => TextInput::make('url')->prefix('https://'))
+                ->buildUsing(function (Link $link) {
+                    $url = $link->getParameter('url');
+
+                    return Str::startsWith($url, 'http') ? $url : "https://{$url}";
+                })
+        );
+    }
+
     public function routes(): self
     {
         return $this->flatten();

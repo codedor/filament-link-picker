@@ -42,6 +42,14 @@ Route::get('/', [HomeController::class, 'show'])
 
 Important note: your route **must** have a `name` defined, otherwise the link picker will not work.
 
+## Adding the 'external URL' link
+
+If you want to use the "Exernal link" option in the link picker, you need to add a route like this, in your `AppServiceProvider`:
+
+```php
+LinkCollection::addExternalLink();
+```
+
 ## The Link object
 
 You can pass a callback to the `linkPicker()` function, this callback has one parameter called `$link`, this is a `Codedor\LinkPicker\Link` object. With this object you can configure the link to your needs.
