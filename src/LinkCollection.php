@@ -30,12 +30,16 @@ class LinkCollection extends Collection
         return $this;
     }
 
-    public function addExternalLink(): self
-    {
+    public function addExternalLink(
+        string $routeName = 'external',
+        string $group = 'General',
+        string $label = 'External URL',
+        string $description = 'Redirects to an external URL',
+    ): self {
         return $this->addLink(
-            Link::make('external', 'External URL')
-                ->group('General')
-                ->description('Redirects to an external URL')
+            Link::make($routeName, $label)
+                ->group($group)
+                ->description($description)
                 ->schema(fn () => TextInput::make('url')->prefix('https://'))
                 ->buildUsing(function (Link $link) {
                     $url = $link->getParameter('url');
