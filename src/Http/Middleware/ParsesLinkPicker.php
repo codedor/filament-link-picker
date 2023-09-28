@@ -3,9 +3,6 @@
 namespace Codedor\LinkPicker\Http\Middleware;
 
 use Closure;
-use Filament\Facades\Filament;
-use Filament\Panel;
-use Illuminate\Support\Str;
 
 class ParsesLinkPicker
 {
