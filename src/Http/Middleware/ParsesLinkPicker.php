@@ -11,15 +11,8 @@ class ParsesLinkPicker
 {
     public function handle($request, Closure $next)
     {
-        if ($request->headers->has('X-LIVEWIRE') && $request->server('HTTP_REFERER')) {
-            $referer = $request->server('HTTP_REFERER');
-            $isFilament = collect(Filament::getPanels())->contains(function (Panel $panel) use ($referer) {
-                return Str::startsWith($referer, $panel->getUrl());
-            });
-
-            if ($isFilament) {
-                return $next($request);
-            }
+        if (is_filament_livewire_route($request)) {
+            return $next($request);
         }
 
         $response = $next($request);
