@@ -27,7 +27,7 @@ if (! function_exists('lroute')) {
         }
 
         if ($withTarget && ($link['newTab'] ?? false)) {
-            $url .= '\" target=\"_blank';
+            $url .= '" target="_blank';
         }
 
         return new HtmlString($url);
