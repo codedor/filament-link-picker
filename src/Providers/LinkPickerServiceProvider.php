@@ -31,7 +31,7 @@ class LinkPickerServiceProvider extends PackageServiceProvider
 
     public function bootingPackage()
     {
-        Route::macro('linkPicker', function (callable $callback = null) {
+        Route::macro('linkPicker', function (?callable $callback = null) {
             /** @var \Illuminate\Routing\Route $this */
             $link = new Link($this->getName());
 
