@@ -49,6 +49,11 @@ class LinkCollection extends Collection
         );
     }
 
+    /**
+     * Returns a flattened collection of all routes.
+     *
+     * @return static<TKey, TValue>
+     */
     public function routes(): self
     {
         return $this->flatten();
