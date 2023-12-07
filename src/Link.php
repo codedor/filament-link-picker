@@ -27,7 +27,7 @@ class Link
     ) {
     }
 
-    public static function make(string $routeName, string $label = null): self
+    public static function make(string $routeName, ?string $label = null): self
     {
         return new self($routeName, $label);
     }
@@ -140,7 +140,7 @@ class Link
         return $route ? clone $route : optional();
     }
 
-    public function build(array $parameters = null): ?string
+    public function build(?array $parameters = null): ?string
     {
         $parameters ??= $this->getParameters();
 
