@@ -181,7 +181,7 @@ class Link
 
             $route->setBindingFields($bindings);
         } catch (\Throwable $th) {
-            report($th);
+            // report($th);
 
             return null;
         }
