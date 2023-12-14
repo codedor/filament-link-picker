@@ -27,7 +27,8 @@ if (! function_exists('lroute')) {
         }
 
         if ($withTarget && ($link['newTab'] ?? false)) {
-            $url .= '" target="_blank';
+            $slash = is_livewire_route(request()) ? '\\' : '';
+            $url .= $slash . '" target=' . $slash . '"_blank';
         }
 
         return new HtmlString($url);
