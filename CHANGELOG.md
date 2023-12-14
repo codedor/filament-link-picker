@@ -5,6 +5,12 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## v0.1.13 - 2023-12-14
+
+Fixed
+
+- [Encode the slashes on Livewire routes](https://github.com/codedor/filament-link-picker/commit/f78af6dcb35be575720eb5fbbfdaf761a966f7bc)
+
 ## v0.1.11 - 2023-10-27
 
 #What's changed?
