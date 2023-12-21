@@ -4,7 +4,7 @@
 
         @if ($routeDescription = $getRouteDescription())
             {{ $getAction('link-picker-clear') }}
-            <ul class="bg-gray-100 hover:bg-gray-200 transition rounded text-sm px-2 py-1">
+            <ul class="bg-gray-100 dark:bg-gray-800 hover:bg-gray-200 dark:hover:bg-gray-700 transition rounded text-sm px-2 py-1">
                 <li>
                     <strong>
                         {{ __('filament-link-picker::input.selected link') }}:
