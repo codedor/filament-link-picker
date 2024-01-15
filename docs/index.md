@@ -50,6 +50,34 @@ If you want to use the "Exernal link" option in the link picker, you need to add
 LinkCollection::addExternalLink();
 ```
 
+Or change some of the default values:
+```php
+LinkCollection::addExternalLink(
+    routeName: 'external',
+    group: 'General',
+    label: 'External URL',
+    description: 'Redirects to an external URL',
+);
+```
+
+## Adding the 'mailto' link
+
+If you want to add a "mailto:" option in the link picker, you need to add a route like this, in your `AppServiceProvider`:
+
+```php
+LinkCollection::addEmailLink();
+```
+
+Or change some of the default values:
+```php
+LinkCollection::addEmailLink(
+    routeName: 'email',
+    group: 'General',
+    label: 'Send e-mail',
+    description: 'Opens the e-mail client',
+);
+```
+
 ## The Link object
 
 You can pass a callback to the `linkPicker()` function, this callback has one parameter called `$link`, this is a `Codedor\LinkPicker\Link` object. With this object you can configure the link to your needs.
