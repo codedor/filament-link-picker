@@ -5,6 +5,21 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## v1.1.0 - 2024-01-26
+
+### What's Changed
+
+* Bump aglipanci/laravel-pint-action from 2.3.0 to 2.3.1 by @dependabot in https://github.com/codedor/filament-link-picker/pull/14
+* Update dark theme, refs #FIL001-77 by @jyrkidn in https://github.com/codedor/filament-link-picker/pull/16
+* Added email-to link option - refs #AGR001-155 by @jyrkidn in https://github.com/codedor/filament-link-picker/pull/17
+* Don't return $route if $route is # by @AngryMoustache in https://github.com/codedor/filament-link-picker/pull/15
+
+### New Contributors
+
+* @AngryMoustache made their first contribution in https://github.com/codedor/filament-link-picker/pull/15
+
+**Full Changelog**: https://github.com/codedor/filament-link-picker/compare/v1.0.2...v1.1.0
+
 ## v1.0.2 - 2023-12-14
 
 Fixed
