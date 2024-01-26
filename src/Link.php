@@ -159,7 +159,7 @@ class Link
             $route = translate_route($this->getCleanRouteName(), null, $route->parameters);
 
             // If the route cannot be found as a translated route, we'll try to find a normal route
-            if (! is_null($route)) {
+            if (! is_null($route) && $route !== '#') {
                 return $route;
             }
         }
