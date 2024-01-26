@@ -40,11 +40,30 @@ class LinkCollection extends Collection
             Link::make($routeName, $label)
                 ->group($group)
                 ->description($description)
-                ->schema(fn () => TextInput::make('url')->prefix('https://'))
+                ->schema(fn () => TextInput::make('url')->prefix('https://')->required())
                 ->buildUsing(function (Link $link) {
                     $url = $link->getParameter('url');
 
                     return Str::startsWith($url, 'http') ? $url : "https://{$url}";
+                })
+        );
+    }
+
+    public function addEmailLink(
+        string $routeName = 'email',
+        string $group = 'General',
+        string $label = 'Send e-mail',
+        string $description = 'Opens the e-mail client',
+    ): self {
+        return $this->addLink(
+            Link::make($routeName, $label)
+                ->group($group)
+                ->description($description)
+                ->schema(fn () => TextInput::make('email')->label('Target e-mail')->email()->required())
+                ->buildUsing(function (Link $link) {
+                    $email = $link->getParameter('email');
+
+                    return "mailto:{$email}";
                 })
         );
     }
