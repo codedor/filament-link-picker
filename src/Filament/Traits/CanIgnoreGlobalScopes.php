@@ -6,9 +6,9 @@ use Closure;
 
 trait CanIgnoreGlobalScopes
 {
-    public array | Closure $ignoredGlobalScopes = [];
+    public array|Closure $ignoredGlobalScopes = [];
 
-    public function ignoredGlobalScopes(array | Closure $scopes)
+    public function ignoredGlobalScopes(array|Closure $scopes)
     {
         $this->ignoredGlobalScopes = $scopes;
 

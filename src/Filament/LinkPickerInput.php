@@ -2,7 +2,6 @@
 
 namespace Codedor\LinkPicker\Filament;
 
-use App\Models\Page;
 use Codedor\LinkPicker\Facades\LinkCollection;
 use Codedor\LinkPicker\Link;
 use Filament\Forms\Components\Actions\Action;
@@ -22,6 +21,7 @@ use ReflectionParameter;
 class LinkPickerInput extends Field
 {
     use Traits\CanIgnoreGlobalScopes;
+
     protected string $view = 'filament-link-picker::filament.link-picker';
 
     protected function setUp(): void
