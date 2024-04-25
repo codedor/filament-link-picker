@@ -5,7 +5,7 @@
         @if ($routeDescription = $getRouteDescription())
             {{ $getAction('link-picker-clear') }}
             <ul class="bg-gray-100 dark:bg-gray-800 hover:bg-gray-200 dark:hover:bg-gray-700 transition rounded text-sm px-2 py-1">
-                <li>
+                <li class="break-all">
                     <strong>
                         {{ __('filament-link-picker::input.selected link') }}:
                     </strong>
@@ -14,7 +14,7 @@
                 </li>
 
                 @if(! empty($routeDescription['parameters']))
-                    <li>
+                    <li class="break-all">
                         <strong>
                             {{ __('filament-link-picker::input.selected parameters') }}:
                         </strong>
@@ -30,7 +30,7 @@
                 @endif
 
                 @if ($routeDescription['newTab'] ?? false)
-                    <li>
+                    <li class="break-all">
                         <strong>
                             {{ __('filament-link-picker::input.selected open in new tab') }}
                         </strong>
