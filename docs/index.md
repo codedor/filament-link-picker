@@ -215,3 +215,39 @@ This package comes with a helper function called `lroute()`, with it you can rea
 ```
 
 If you have enabled the route to open in a new tab, the helper will automatically add the `target="_blank"` attribute to the link as well.
+
+## Config
+
+The config file contains the following:
+
+```php
+return [
+    'ignored_global_scopes' => [
+        // \App\Models\Scopes\CustomScope::class,
+    ],
+];
+```
+
+### ignored_global_scopes
+
+With this config, you can disable certain global scopes on your models. This is useful when you have a global scope that is not needed for the link picker.
+
+For example:
+```php
+return [
+    'ignored_global_scopes' => [
+        \App\Models\Scopes\OnlineScope::class,
+        'domains',
+    ],
+];
+```
+
+You can also use the `ignoredGlobalScopes` method on the `LinkPickerInput` field, like so:
+
+```php
+LinkPickerInput::make('link')
+    ->ignoredGlobalScopes([
+        \App\Models\Scopes\OnlineScope::class,
+        'domains',
+    ]),
+```

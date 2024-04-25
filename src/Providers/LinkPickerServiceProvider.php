@@ -19,6 +19,7 @@ class LinkPickerServiceProvider extends PackageServiceProvider
             ->name('filament-link-picker')
             ->setBasePath(__DIR__ . '/../')
             ->hasViews('filament-link-picker')
+            ->hasConfigFile('filament-link-picker')
             ->hasTranslations();
     }
 
