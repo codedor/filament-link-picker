@@ -2,6 +2,7 @@
 
 namespace Codedor\LinkPicker;
 
+use Filament\Forms\Components\Textarea;
 use Filament\Forms\Components\TextInput;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Str;
@@ -54,16 +55,49 @@ class LinkCollection extends Collection
         string $group = 'General',
         string $label = 'Send e-mail',
         string $description = 'Opens the e-mail client',
+        bool $showSubject = false,
+        bool $showBody = false,
     ): self {
         return $this->addLink(
             Link::make($routeName, $label)
                 ->group($group)
                 ->description($description)
-                ->schema(fn () => TextInput::make('email')->label('Target e-mail')->email()->required())
+                ->schema(fn () => [
+                    TextInput::make('email')->label('Target e-mail')->email()->requiredWithoutAll([
+                        'parameters.body', 'parameters.subject'
+                    ], false),
+                    TextInput::make('subject')->label('E-mail subject')->requiredWithoutAll([
+                        'parameters.email', 'parameters.body'
+                    ], false)->hidden(! $showSubject),
+                    Textarea::make('body')->label('E-mail body')->requiredWithoutAll([
+                        'parameters.email', 'parameters.subject'
+                    ], false)->hidden(! $showBody),
+                ])
                 ->buildUsing(function (Link $link) {
                     $email = $link->getParameter('email');
+                    $subject = urlencode($link->getParameter('subject'));
+                    $body = urlencode($link->getParameter('body'));
 
-                    return "mailto:{$email}";
+                    return "mailto:{$email}?subject={$subject}&body={$body}";
+                })
+        );
+    }
+
+    public function addTelephoneLink(
+        string $routeName = 'tel',
+        string $group = 'General',
+        string $label = 'Telephone number',
+        string $description = 'Will make a call',
+    ): self {
+        return $this->addLink(
+            Link::make($routeName, $label)
+                ->group($group)
+                ->description($description)
+                ->schema(fn () => TextInput::make('tel')->label('Telephone number')->tel()->required())
+                ->buildUsing(function (Link $link) {
+                    $email = $link->getParameter('tel');
+
+                    return "tel:{$email}";
                 })
         );
     }

@@ -156,6 +156,7 @@ class LinkPickerInput extends Field
                         $link->getCleanRouteName() => $link->getLabel(),
                     ]));
             })
+            ->searchable()
             ->required()
             ->live();
 
