@@ -64,13 +64,13 @@ class LinkCollection extends Collection
                 ->description($description)
                 ->schema(fn () => [
                     TextInput::make('email')->label('Target e-mail')->email()->requiredWithoutAll([
-                        'parameters.body', 'parameters.subject'
+                        'parameters.body', 'parameters.subject',
                     ], false),
                     TextInput::make('subject')->label('E-mail subject')->requiredWithoutAll([
-                        'parameters.email', 'parameters.body'
+                        'parameters.email', 'parameters.body',
                     ], false)->hidden(! $showSubject),
                     Textarea::make('body')->label('E-mail body')->requiredWithoutAll([
-                        'parameters.email', 'parameters.subject'
+                        'parameters.email', 'parameters.subject',
                     ], false)->hidden(! $showBody),
                 ])
                 ->buildUsing(function (Link $link) {
