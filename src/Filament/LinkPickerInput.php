@@ -190,10 +190,13 @@ class LinkPickerInput extends Field
                         ->label(Str::title($parameter->name))
                         ->required(! $parameter->allowsNull())
                         ->searchable()
-                        ->options($model::withoutGlobalScopes()->pluck(
-                            $model::$linkPickerTitleField ?? 'id',
-                            (new $model)->getKeyName(),
-                        ));
+                        ->options($model::query()
+                            ->when(method_exists($model, 'linkPickerParameterQuery'), fn ($query) => $model::linkPickerParameterQuery($query))
+                            ->pluck(
+                                $model::$linkPickerTitleField ?? 'id',
+                                (new $model)->getKeyName(),
+                            )
+                        );
                 });
         }
 
