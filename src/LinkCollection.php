@@ -76,7 +76,7 @@ class LinkCollection extends Collection
                 ->buildUsing(function (Link $link) {
                     $email = $link->getParameter('email');
                     $subject = urlencode($link->getParameter('subject'));
-                    $body = urlencode($link->getParameter('body'));
+                    $body = Str::replace('+', '%20', urlencode($link->getParameter('body')));
 
                     return "mailto:{$email}?subject={$subject}&body={$body}";
                 })
