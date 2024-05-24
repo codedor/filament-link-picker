@@ -75,7 +75,19 @@ LinkCollection::addEmailLink(
     group: 'General',
     label: 'Send e-mail',
     description: 'Opens the e-mail client',
+    showSubject: false,
+    showBody: false,
 );
+```
+
+With `showSubject` and `showBody` you can enable a subject and/or body field to pass to the mail client. 
+
+## Adding the 'tel' link
+
+If you want to add a "tel:" option in the link picker, you need to add a route like this, in your `AppServiceProvider`:
+
+```php
+LinkCollection::addTelephoneLink();
 ```
 
 ## The Link object
