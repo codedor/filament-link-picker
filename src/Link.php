@@ -24,8 +24,7 @@ class Link
     public function __construct(
         protected string $routeName,
         protected ?string $label = null,
-    ) {
-    }
+    ) {}
 
     public static function make(string $routeName, ?string $label = null): self
     {
