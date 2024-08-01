@@ -15,7 +15,7 @@
         "filament/filament": "^3.0"
     },
     "require-dev": {
-        "codedor/laravel-translatable-routes": "dev-feature/laravel-11",
+        "codedor/laravel-translatable-routes": "dev-feature/laravel-v11-support",
         "laravel/pint": "^1.0",
         "nunomaduro/collision": "^7.0|^8.0",
         "larastan/larastan": "^2.0",
