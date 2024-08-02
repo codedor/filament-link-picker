@@ -21,39 +21,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 **Full Changelog**: https://github.com/codedor/filament-link-picker/compare/v1.1.1...v1.2.0
 
-## v1.0.1 - 2023-12-08
-
-**Full Changelog**: https://github.com/codedor/filament-link-picker/compare/v1.0.0...v1.0.1
-
-## v1.0.0 - 2023-12-07
-
-### What's Changed
-
-* Bump actions/checkout from 3 to 4 by @dependabot in https://github.com/codedor/filament-link-picker/pull/12
-* Bump stefanzweifel/git-auto-commit-action from 4 to 5 by @dependabot in https://github.com/codedor/filament-link-picker/pull/13
-
-**Full Changelog**: https://github.com/codedor/filament-link-picker/compare/v0.1.12...v1.0.0
-
-## v0.1.12 - 2023-12-05
-
-**Full Changelog**: https://github.com/codedor/filament-link-picker/compare/v0.1.11...v0.1.12
-
-## v0.1.9 - 2023-09-28
-
-**Full Changelog**: https://github.com/codedor/filament-link-picker/compare/v0.1.8...v0.1.9
-
-## v0.1.7 - 2023-09-26
-
-**Full Changelog**: https://github.com/codedor/filament-link-picker/compare/v0.1.6...v0.1.7
-
-## v0.1.6 - 2023-09-26
-
-**Full Changelog**: https://github.com/codedor/filament-link-picker/compare/v0.1.5...v0.1.6
-
-## v0.1.4 - 2023-09-12
-
-**Full Changelog**: https://github.com/codedor/filament-link-picker/compare/v0.1.3...v0.1.4
-
 ## v1.1.1 - 2024-04-25
 
 ### What's Changed
@@ -84,11 +51,28 @@ Fixed
 
 - [Encode the slashes on Livewire routes](https://github.com/codedor/filament-link-picker/commit/f78af6dcb35be575720eb5fbbfdaf761a966f7bc)
 
+## v1.0.1 - 2023-12-08
+
+**Full Changelog**: https://github.com/codedor/filament-link-picker/compare/v1.0.0...v1.0.1
+
+## v1.0.0 - 2023-12-07
+
+### What's Changed
+
+* Bump actions/checkout from 3 to 4 by @dependabot in https://github.com/codedor/filament-link-picker/pull/12
+* Bump stefanzweifel/git-auto-commit-action from 4 to 5 by @dependabot in https://github.com/codedor/filament-link-picker/pull/13
+
+**Full Changelog**: https://github.com/codedor/filament-link-picker/compare/v0.1.12...v1.0.0
+
 ## v0.1.13 - 2023-12-14
 
 Fixed
 
 - [Encode the slashes on Livewire routes](https://github.com/codedor/filament-link-picker/commit/f78af6dcb35be575720eb5fbbfdaf761a966f7bc)
+
+## v0.1.12 - 2023-12-05
+
+**Full Changelog**: https://github.com/codedor/filament-link-picker/compare/v0.1.11...v0.1.12
 
 ## v0.1.11 - 2023-10-27
 
@@ -106,6 +90,10 @@ Fixed
 
 Full Changelog: https://github.com/codedor/filament-link-picker/compare/v0.1.9...v0.1.10
 
+## v0.1.9 - 2023-09-28
+
+**Full Changelog**: https://github.com/codedor/filament-link-picker/compare/v0.1.8...v0.1.9
+
 ## v0.1.8 - 2023-09-28
 
 ### What's Changed
@@ -114,11 +102,23 @@ Full Changelog: https://github.com/codedor/filament-link-picker/compare/v0.1.9..
 
 **Full Changelog**: https://github.com/codedor/filament-link-picker/compare/v0.1.7...v0.1.8
 
+## v0.1.7 - 2023-09-26
+
+**Full Changelog**: https://github.com/codedor/filament-link-picker/compare/v0.1.6...v0.1.7
+
+## v0.1.6 - 2023-09-26
+
+**Full Changelog**: https://github.com/codedor/filament-link-picker/compare/v0.1.5...v0.1.6
+
 ## v0.1.5 - 2023-09-18
 
 ### What's Changed
 
 - Display "group > label" for selected link instead of just the label
+
+## v0.1.4 - 2023-09-12
+
+**Full Changelog**: https://github.com/codedor/filament-link-picker/compare/v0.1.3...v0.1.4
 
 ## v0.1.3 - 2023-09-06
 
