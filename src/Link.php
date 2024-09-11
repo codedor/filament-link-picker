@@ -170,6 +170,9 @@ class Link
     {
         $route = $this->getRoute();
 
+        if (isset($parameters['anchor'])) {
+            unset($parameters['anchor']);
+        }
         $route->parameters = $parameters;
         $bindings = $route->bindingFields();
 
