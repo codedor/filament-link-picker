@@ -2,7 +2,6 @@
 
 namespace Codedor\LinkPicker\Filament;
 
-use App\Models\Event;
 use Codedor\LinkPicker\Facades\LinkCollection;
 use Codedor\LinkPicker\Link;
 use Filament\Forms\Components\Actions\Action;
