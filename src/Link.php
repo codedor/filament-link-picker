@@ -4,7 +4,6 @@ namespace Codedor\LinkPicker;
 
 use Closure;
 use Filament\Forms\Components\Field;
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Routing\ImplicitRouteBinding;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Route;

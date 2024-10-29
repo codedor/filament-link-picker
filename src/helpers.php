@@ -62,6 +62,7 @@ if (! function_exists('referer_locale')) {
         $referer = request()->headers->get('referer');
 
         preg_match('/locale=-(.*)-tab/', $referer, $matches);
+
         return $matches[1] ?? null;
     }
 }

@@ -2,7 +2,6 @@
 
 namespace Codedor\LinkPicker\Filament;
 
-use App\Models\Event;
 use Codedor\LinkPicker\Facades\LinkCollection;
 use Codedor\LinkPicker\Link;
 use Filament\Forms\Components\Actions\Action;
@@ -40,28 +39,29 @@ class LinkPickerInput extends Field
                 ->fillForm(function (Get $get, Component $component, \Livewire\Component $livewire): array {
                     $statePath = $component->getStatePath(false);
 
-                    $schema = $this->getFormSchemaForRoute($get("{$statePath}.route"));
+                    if (! $get("{$statePath}.route")) {
+                        $state = $component->getDefaultState();
+                    } else {
+                        $state = [
+                            'route' => $get("{$statePath}.route"),
+                            'newTab' => $get("{$statePath}.newTab"),
+                            'parameters' => $get("{$statePath}.parameters") ?: [],
+                        ];
+                    }
 
-                    $state = [
-                        'route' => $get("{$statePath}.route"),
-                        'newTab' => $get("{$statePath}.newTab"),
-                        'parameters' => $get("{$statePath}.parameters") ?: [],
-                    ];
+                    $schema = $this->getFormSchemaForRoute($state['route'] ?? null);
 
                     $actionNestingIndex = array_key_last($livewire->mountedFormComponentActions);
 
-                    $schema->each(function (Field $field) use (&$state, $statePath, $get, $actionNestingIndex, $livewire) {
-                        $fieldStatePath = $field->statePath;
-
-                        data_fill(
+                    $schema
+                        ->each(fn (Field $field) => data_fill(
                             $state,
-                            $fieldStatePath,
+                            $field->statePath,
                             data_get(
                                 $livewire->mountedFormComponentActionsData[$actionNestingIndex] ?? [],
-                                "{$statePath}.{$fieldStatePath}"
-                            ) ?? $get("{$statePath}.{$fieldStatePath}") ?? null
-                        );
-                    });
+                                "{$statePath}.{$field->statePath}"
+                            ) ?? data_get($state, $field->statePath) ?? null
+                        ));
 
                     return $state;
                 })
@@ -70,11 +70,15 @@ class LinkPickerInput extends Field
 
                     $actionNestingIndex = array_key_last($livewire->mountedFormComponentActions);
 
-                    $schema = $this->getFormSchemaForRoute(
-                        $livewire->mountedFormComponentActionsData[$actionNestingIndex]['route'] ?? $get("{$statePath}.route") ?? null
-                    );
+                    if (! $get("{$statePath}.route")) {
+                        $state = $component->getDefaultState();
+                    } else {
+                        $state = $livewire->mountedFormComponentActionsData[$actionNestingIndex] ?? [];
+                    }
 
-                    $state = $livewire->mountedFormComponentActionsData[$actionNestingIndex] ?? [];
+                    $schema = $this->getFormSchemaForRoute(
+                        $livewire->mountedFormComponentActionsData[$actionNestingIndex]['route'] ?? $get("{$statePath}.route") ?? $state['route'] ?? null
+                    );
 
                     // since the fields are dynamic we have to fill the state manually,
                     // else validation will fail because property is not in the state
@@ -87,7 +91,7 @@ class LinkPickerInput extends Field
                             data_get(
                                 $livewire->mountedFormComponentActionsData[$actionNestingIndex] ?? [],
                                 "{$statePath}.{$fieldStatePath}"
-                            ) ?? $get("{$statePath}.{$fieldStatePath}") ?? null
+                            ) ?? $get("{$statePath}.{$fieldStatePath}") ?? $state[$fieldStatePath] ?? null
                         );
                     });
 
@@ -206,13 +210,16 @@ class LinkPickerInput extends Field
                 Select::make('parameters.anchor')
                     ->hidden(fn (Get $get) => ! $get("parameters.{$anchorData['parameter']}"))
                     ->options(function (Get $get) use ($anchorData) {
+                        /**
+                         * @var Model $record
+                         */
                         $record = $anchorData['model']::find($get("parameters.{$anchorData['parameter']}"));
 
                         if (method_exists($record, 'isTranslatableAttribute') && $record->isTranslatableAttribute($anchorData['field'])) {
-                            return $record?->getTranslation($anchorData['field'], referer_locale())->anchorList();
+                            return optional($record->getTranslation($anchorData['field'], referer_locale()))->anchorList();
                         }
 
-                        return $record?->{$anchorData['field']}->anchorList();
+                        return $record->{$anchorData['field']}->anchorList();
                     })
             );
 
