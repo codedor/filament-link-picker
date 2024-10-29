@@ -4,6 +4,7 @@ namespace Codedor\LinkPicker;
 
 use Closure;
 use Filament\Forms\Components\Field;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Routing\ImplicitRouteBinding;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Route;
@@ -20,6 +21,8 @@ class Link
     protected ?Closure $schema = null;
 
     protected array $parameters = [];
+
+    protected ?array $withAnchors = null;
 
     public function __construct(
         protected string $routeName,
@@ -83,6 +86,22 @@ class Link
         return $schema->map(fn (Field $field) => $field->statePath(
             "parameters.{$field->getName()}"
         ));
+    }
+
+    public function withAnchors(string $field = 'body', ?string $model = null, ?string $parameter = null)
+    {
+        $this->withAnchors = [
+            'field' => $field,
+            'model' => $model,
+            'parameter' => $parameter,
+        ];
+
+        return $this;
+    }
+
+    public function getWithAnchors(): ?array
+    {
+        return $this->withAnchors;
     }
 
     public function group(string $group): self

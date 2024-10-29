@@ -55,3 +55,13 @@ if (! function_exists('parse_link_picker_json')) {
         );
     }
 }
+
+if (! function_exists('referer_locale')) {
+    function referer_locale(): ?string
+    {
+        $referer = request()->headers->get('referer');
+
+        preg_match('/locale=-(.*)-tab/', $referer, $matches);
+        return $matches[1] ?? null;
+    }
+}
