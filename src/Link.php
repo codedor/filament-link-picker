@@ -21,6 +21,8 @@ class Link
 
     protected array $parameters = [];
 
+    protected ?array $withAnchors = null;
+
     public function __construct(
         protected string $routeName,
         protected ?string $label = null,
@@ -83,6 +85,22 @@ class Link
         return $schema->map(fn (Field $field) => $field->statePath(
             "parameters.{$field->getName()}"
         ));
+    }
+
+    public function withAnchors(string $field = 'body', ?string $model = null, ?string $parameter = null)
+    {
+        $this->withAnchors = [
+            'field' => $field,
+            'model' => $model,
+            'parameter' => $parameter,
+        ];
+
+        return $this;
+    }
+
+    public function getWithAnchors(): ?array
+    {
+        return $this->withAnchors;
     }
 
     public function group(string $group): self
@@ -170,6 +188,9 @@ class Link
     {
         $route = $this->getRoute();
 
+        if (isset($parameters['anchor'])) {
+            unset($parameters['anchor']);
+        }
         $route->parameters = $parameters;
         $bindings = $route->bindingFields();
 
