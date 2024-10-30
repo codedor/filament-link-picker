@@ -40,7 +40,7 @@ class LinkPickerInput extends Field
                     $statePath = $component->getStatePath(false);
 
                     if (! $get("{$statePath}.route")) {
-                        $state = $component->getDefaultState();
+                        $state = $component->getDefaultState() ?? [];
                     } else {
                         $state = [
                             'route' => $get("{$statePath}.route"),
@@ -222,7 +222,6 @@ class LinkPickerInput extends Field
                         return $record->{$anchorData['field']}->anchorList();
                     })
             );
-
         }
 
         return $schema
