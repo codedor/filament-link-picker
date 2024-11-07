@@ -130,7 +130,7 @@ class Link
         return $this;
     }
 
-    public function getBuildDescriptionUsing(): null | Closure
+    public function getBuildDescriptionUsing(): ?Closure
     {
         return $this->buildDescriptionUsing;
     }

@@ -145,7 +145,7 @@ class LinkPickerInput extends Field
             'label' => $route->getLabel(),
             'parameters' => $parameters,
             'newTab' => $state['newTab'] ?? false,
-            'custom' => !! $route->getBuildDescriptionUsing(),
+            'custom' => (bool) $route->getBuildDescriptionUsing(),
         ];
     }
 
@@ -197,12 +197,12 @@ class LinkPickerInput extends Field
                         ->required(! $parameter->allowsNull())
                         ->searchable()
                         ->options($model::query()
-                             ->when(method_exists($model, 'linkPickerParameterQuery'), fn ($query) => $model::linkPickerParameterQuery($query))
-                             ->pluck(
-                                 $model::$linkPickerTitleField ?? 'id',
-                                 (new $model)->getKeyName(),
-                             )
-                         );
+                            ->when(method_exists($model, 'linkPickerParameterQuery'), fn ($query) => $model::linkPickerParameterQuery($query))
+                            ->pluck(
+                                $model::$linkPickerTitleField ?? 'id',
+                                (new $model)->getKeyName(),
+                            )
+                        );
                 });
         }
 
