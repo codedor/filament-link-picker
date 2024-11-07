@@ -80,7 +80,7 @@ LinkCollection::addEmailLink(
 );
 ```
 
-With `showSubject` and `showBody` you can enable a subject and/or body field to pass to the mail client. 
+With `showSubject` and `showBody` you can enable a subject and/or body field to pass to the mail client.
 
 ## Adding the 'tel' link
 
@@ -164,6 +164,21 @@ Route::get('/', [HomeController::class, 'show'])
     ->linkPicker(fn (Link $link) => $link->group('Website'));
 ```
 
+### Custom description
+
+If you need full control over the shown description in the CMS, you can override the default with the `->buildDescriptionUsing()` method. For example:
+
+```php
+use Codedor\LinkPicker\Link;
+use Illuminate\Support\Facades\Route;
+
+Route::get('/', [HomeController::class, 'show'])
+    ->name('home')
+    ->linkPicker(fn (Link $link) => $link->buildDescriptionUsing(function (array $parameters) {
+        return 'a string';
+    }));
+```
+
 ### Building routes
 
 Say for example you have a route like this:
@@ -232,7 +247,7 @@ If you have enabled the route to open in a new tab, the helper will automaticall
 
 ### Title field
 
-We will show the `id` in the linkpicker dropdown when choosing a model for a parameter. 
+We will show the `id` in the linkpicker dropdown when choosing a model for a parameter.
 But this can be customized in your model, via the static property `$linkPickerTitleField`
 
 ```php
