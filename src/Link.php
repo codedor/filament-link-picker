@@ -17,6 +17,8 @@ class Link
 
     protected ?Closure $buildUsing = null;
 
+    protected ?Closure $buildDescriptionUsing = null;
+
     protected ?Closure $schema = null;
 
     protected array $parameters = [];
@@ -119,6 +121,18 @@ class Link
         $this->buildUsing = $closure;
 
         return $this;
+    }
+
+    public function buildDescriptionUsing(Closure $closure)
+    {
+        $this->buildDescriptionUsing = $closure;
+
+        return $this;
+    }
+
+    public function getBuildDescriptionUsing(): null | Closure
+    {
+        return $this->buildDescriptionUsing;
     }
 
     public function getCleanRouteName()
