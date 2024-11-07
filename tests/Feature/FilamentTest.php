@@ -26,5 +26,6 @@ it('can get the current state', function () {
             'label' => 'Name',
             'parameters' => [],
             'newTab' => false,
+            'custom' => false,
         ]);
 });
