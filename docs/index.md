@@ -166,7 +166,7 @@ Route::get('/', [HomeController::class, 'show'])
 
 ### Custom description
 
-If you need full control over the shown description in the CMS, you can override the default with the `->buildDescriptionUsing()` method. For example:
+If you want to replace the `Selected Parameters` description, you can override the default with the `->buildDescriptionUsing()` method. For example:
 
 ```php
 use Codedor\LinkPicker\Link;
