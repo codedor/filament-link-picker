@@ -15,17 +15,21 @@
 
                 @if(! empty($routeDescription['parameters']))
                     <li class="break-all">
-                        <strong>
-                            {{ __('filament-link-picker::input.selected parameters') }}:
-                        </strong>
+                        @if ($routeDescription['custom'] ?? false)
+                            {!! $routeDescription['parameters'][0] ?? null !!}
+                        @else
+                            <strong>
+                                {{ __('filament-link-picker::input.selected parameters') }}:
+                            </strong>
 
-                        <ul>
-                            @foreach ($routeDescription['parameters'] as $name => $value)
-                                <li>
-                                    {{ ucfirst($name) }}: {{ $value }}
-                                </li>
-                            @endforeach
-                        </ul>
+                            <ul>
+                                @foreach ($routeDescription['parameters'] as $name => $value)
+                                    <li>
+                                        {{ ucfirst($name) }}: {{ $value }}
+                                    </li>
+                                @endforeach
+                            </ul>
+                        @endif
                     </li>
                 @endif
 

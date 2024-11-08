@@ -13,6 +13,7 @@ use Filament\Forms\Form;
 use Filament\Forms\Get;
 use Filament\Forms\Set;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Arr;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Reflector;
 use Illuminate\Support\Str;
@@ -123,15 +124,19 @@ class LinkPickerInput extends Field
             return [];
         }
 
-        $route->parameters($state['parameters'] ?? []);
+        if ($route->getBuildDescriptionUsing()) {
+            $parameters = Arr::wrap($route->getBuildDescriptionUsing()($state['parameters'] ?? []));
+        } else {
+            $route->parameters($state['parameters'] ?? []);
 
-        $parameters = $route->getParameters();
-        $resolvedRoute = $route->resolveParameters($parameters);
+            $parameters = $route->getParameters();
+            $resolvedRoute = $route->resolveParameters($parameters);
 
-        foreach ($resolvedRoute->parameters ?? [] as $key => $value) {
-            if ($value instanceof Model) {
-                $value = $value->{$value::$linkPickerTitleField ?? 'id'};
-                $parameters[$key] = $value;
+            foreach ($resolvedRoute->parameters ?? [] as $key => $value) {
+                if ($value instanceof Model) {
+                    $value = $value->{$value::$linkPickerTitleField ?? 'id'};
+                    $parameters[$key] = $value;
+                }
             }
         }
 
@@ -140,6 +145,7 @@ class LinkPickerInput extends Field
             'label' => $route->getLabel(),
             'parameters' => $parameters,
             'newTab' => $state['newTab'] ?? false,
+            'custom' => (bool) $route->getBuildDescriptionUsing(),
         ];
     }
 
