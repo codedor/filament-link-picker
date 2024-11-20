@@ -2,21 +2,15 @@
 
 namespace Codedor\LinkPicker;
 
-use App\Models\BlogPost;
 use Codedor\FilamentArchitect\Engines\Architect;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
 use Filament\Resources\Pages\Page;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Request;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Str;
-use Livewire\Drawer\ImplicitRouteBinding;
-use Livewire\Features\SupportPageComponents\SupportPageComponents;
-use Livewire\Livewire;
-use ReflectionClass;
 use Throwable;
 
 /**
@@ -120,7 +114,7 @@ class LinkCollection extends Collection
                                 return $record->anchorList();
                             }
 
-                            if (class_exists(Architect::class )) {
+                            if (class_exists(Architect::class)) {
                                 return collect($record?->getFillable())
                                     ->map(fn ($field) => $record->getAttributeValue($field))
                                     ->filter(fn ($value) => $value instanceof Architect)
