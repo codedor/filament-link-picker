@@ -78,6 +78,36 @@ LinkCollection::addEmailLink(
 );
 ```
 
+## Adding the 'anchor' link
+
+If you want to add an "anchor" option in the link picker, you need to add a route like this, in your `AppServiceProvider`:
+
+```php
+LinkCollection::addAnchorLink();
+```
+
+Or change some of the default values:
+```php
+LinkCollection::addAnchorLink(
+    routeName: 'anchor',
+    group: 'General',
+    label: 'Anchor link',
+    description: 'Link to achor on current page',
+);
+```
+
+This will fetch the [Architect](https://github.com/codedor/filament-architect) fields from the current page and use them as options for the anchor link. If you want to modify this behavior, you can add a `anchorList` method to your model:
+
+```php
+public function anchorList(): array
+{
+    return [
+        'first-section' => 'First section',
+        'second-section' => 'Second section',
+    ];
+}
+```
+
 ## The Link object
 
 You can pass a callback to the `linkPicker()` function, this callback has one parameter called `$link`, this is a `Codedor\LinkPicker\Link` object. With this object you can configure the link to your needs.

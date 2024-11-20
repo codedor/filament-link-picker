@@ -15,6 +15,7 @@ use Filament\Forms\Set;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Routing\Route;
 use Illuminate\Support\Collection;
+use Illuminate\Support\Optional;
 use Illuminate\Support\Reflector;
 use Illuminate\Support\Str;
 use ReflectionParameter;
@@ -228,8 +229,12 @@ class LinkPickerInput extends Field
             );
     }
 
-    protected function routeParameters(Route $route): Collection
+    protected function routeParameters(Optional|Route $route): Collection
     {
+        if ($route instanceof Optional) {
+            return collect();
+        }
+
         return collect($route->signatureParameters())
             ->filter(function (ReflectionParameter $parameter) {
                 $className = Reflector::getParameterClassName($parameter);
