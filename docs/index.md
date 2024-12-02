@@ -75,7 +75,19 @@ LinkCollection::addEmailLink(
     group: 'General',
     label: 'Send e-mail',
     description: 'Opens the e-mail client',
+    showSubject: false,
+    showBody: false,
 );
+```
+
+With `showSubject` and `showBody` you can enable a subject and/or body field to pass to the mail client.
+
+## Adding the 'tel' link
+
+If you want to add a "tel:" option in the link picker, you need to add a route like this, in your `AppServiceProvider`:
+
+```php
+LinkCollection::addTelephoneLink();
 ```
 
 ## Adding the 'anchor' link
@@ -182,6 +194,21 @@ Route::get('/', [HomeController::class, 'show'])
     ->linkPicker(fn (Link $link) => $link->group('Website'));
 ```
 
+### Custom description
+
+If you want to replace the `Selected Parameters` description, you can override the default with the `->buildDescriptionUsing()` method. For example:
+
+```php
+use Codedor\LinkPicker\Link;
+use Illuminate\Support\Facades\Route;
+
+Route::get('/', [HomeController::class, 'show'])
+    ->name('home')
+    ->linkPicker(fn (Link $link) => $link->buildDescriptionUsing(function (array $parameters) {
+        return 'a string';
+    }));
+```
+
 ### Building routes
 
 Say for example you have a route like this:
@@ -245,3 +272,25 @@ This package comes with a helper function called `lroute()`, with it you can rea
 ```
 
 If you have enabled the route to open in a new tab, the helper will automatically add the `target="_blank"` attribute to the link as well.
+
+## Customizing the route parameters list
+
+### Title field
+
+We will show the `id` in the linkpicker dropdown when choosing a model for a parameter.
+But this can be customized in your model, via the static property `$linkPickerTitleField`
+
+```php
+public static $linkPickerTitleField = 'working_title';
+```
+
+### Customizing parameter query
+
+We will show all models in the parameter select, but this can be customized by adding a static method `linkPickerParameterQuery` on the model.
+
+```php
+public static function linkPickerParameterQuery($query): void
+{
+    $query->where('is_published', true);
+}
+```
