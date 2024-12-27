@@ -3,6 +3,7 @@
 namespace Codedor\LinkPicker;
 
 use Codedor\FilamentArchitect\Engines\Architect;
+use Codedor\LocaleCollection\Facades\LocaleCollection;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\Textarea;
 use Filament\Forms\Components\TextInput;
@@ -123,9 +124,19 @@ class LinkCollection extends Collection
                     return Select::make('anchor')
                         ->label('Anchor')
                         ->options(function (?Model $record) {
+                            $request = Request::create(request()->header('referer'));
+
+                            $locale = $request->query('locale');
+
+                            if (filled($locale)) {
+                                $locale = Str::of($locale)
+                                    ->before('-tab')
+                                    ->after('-')
+                                    ->toString();
+                            }
+
                             if (! $record) {
                                 try {
-                                    $request = Request::create(request()->header('referer'));
                                     $route = Route::getRoutes()->match($request);
 
                                     /** @var Page $component */
@@ -149,11 +160,14 @@ class LinkCollection extends Collection
                             }
 
                             if (class_exists(Architect::class)) {
+                                if (method_exists($record, 'setLocale')) {
+                                    $record->setLocale($locale);
+                                }
+
                                 return collect($record?->getFillable())
                                     ->map(fn ($field) => $record->getAttributeValue($field))
                                     ->filter(fn ($value) => $value instanceof Architect)
                                     ->map->anchorList()
-                                    ->dump()
                                     ->flatMap(fn ($values) => $values);
                             }
 
