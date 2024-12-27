@@ -3,7 +3,6 @@
 namespace Codedor\LinkPicker;
 
 use Codedor\FilamentArchitect\Engines\Architect;
-use Codedor\LocaleCollection\Facades\LocaleCollection;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\Textarea;
 use Filament\Forms\Components\TextInput;
