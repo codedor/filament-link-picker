@@ -2,10 +2,17 @@
 
 namespace Codedor\LinkPicker;
 
+use Codedor\FilamentArchitect\Engines\Architect;
+use Filament\Forms\Components\Select;
 use Filament\Forms\Components\Textarea;
 use Filament\Forms\Components\TextInput;
+use Filament\Resources\Pages\Page;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Http\Request;
 use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Str;
+use Throwable;
 
 /**
  * @template TKey of array-key
@@ -98,6 +105,79 @@ class LinkCollection extends Collection
                     $email = $link->getParameter('tel');
 
                     return "tel:{$email}";
+                })
+        );
+    }
+
+    public function addAnchorLink(
+        string $routeName = 'anchor',
+        string $group = 'General',
+        string $label = 'Anchor link',
+        string $description = 'Link to achor on current page',
+    ): self {
+        return $this->addLink(
+            Link::make($routeName, $label)
+                ->group($group)
+                ->description($description)
+                ->schema(function () {
+                    return Select::make('anchor')
+                        ->label('Anchor')
+                        ->options(function (?Model $record) {
+                            $request = Request::create(request()->header('referer'));
+
+                            $locale = $request->query('locale');
+
+                            if (filled($locale)) {
+                                $locale = Str::of($locale)
+                                    ->before('-tab')
+                                    ->after('-')
+                                    ->toString();
+                            }
+
+                            if (! $record) {
+                                try {
+                                    $route = Route::getRoutes()->match($request);
+
+                                    /** @var Page $component */
+                                    $component = Str::replace('@__invoke', '', $route->action['uses']);
+
+                                    $resource = $component::getResource();
+                                    $model = $resource::getModel();
+
+                                    $record = $model::find($route->parameter('record'));
+                                } catch (Throwable $e) {
+                                    return [];
+                                }
+                            }
+
+                            if (! $record) {
+                                return [];
+                            }
+
+                            if (method_exists($record, 'anchorList')) {
+                                return $record->anchorList();
+                            }
+
+                            if (class_exists(Architect::class)) {
+                                if (method_exists($record, 'setLocale')) {
+                                    $record->setLocale($locale);
+                                }
+
+                                return collect($record?->getFillable())
+                                    ->map(fn ($field) => $record->getAttributeValue($field))
+                                    ->filter(fn ($value) => $value instanceof Architect)
+                                    ->map->anchorList()
+                                    ->flatMap(fn ($values) => $values);
+                            }
+
+                            return [];
+                        })
+                        ->required();
+                })
+                ->buildUsing(function (Link $link) {
+                    $anchor = $link->getParameter('anchor');
+
+                    return "#{$anchor}";
                 })
         );
     }

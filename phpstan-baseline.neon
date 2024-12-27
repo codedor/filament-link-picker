@@ -12,3 +12,11 @@ parameters:
 			message: "#^Access to an undefined property Livewire\\\\Component\\:\\:\\$mountedFormComponentActionsData\\.$#"
 			count: 1
 			path: src/Filament/LinkPickerInput.php
+		-
+			message: "#^Call to an undefined method Illuminate\\\\Database\\\\Eloquent\\\\Model\\:\\:getTranslation\\(\\)\\.$#"
+			count: 1
+			path: src/Filament/LinkPickerInput.php
+		-
+			message: "#^Call to an undefined method Illuminate\\\\Support\\\\HigherOrderCollectionProxy\\<string, Codedor\\\\FilamentArchitect\\\\Engines\\\\Architect, Illuminate\\\\Support\\\\Collection\\<\\(int\\|string\\)\\, Codedor\\\\FilamentArchitect\\\\Engines\\\\Architect\\>\\>\\:\\:anchorList\\(\\)\\.$#"
+			count: 1
+			path: src/LinkCollection.php

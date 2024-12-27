@@ -13,8 +13,10 @@ use Filament\Forms\Form;
 use Filament\Forms\Get;
 use Filament\Forms\Set;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Routing\Route;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Collection;
+use Illuminate\Support\Optional;
 use Illuminate\Support\Reflector;
 use Illuminate\Support\Str;
 use ReflectionParameter;
@@ -49,18 +51,19 @@ class LinkPickerInput extends Field
 
                     $actionNestingIndex = array_key_last($livewire->mountedFormComponentActions);
 
-                    $schema->each(function (Field $field) use (&$state, $statePath, $get, $actionNestingIndex, $livewire) {
-                        $fieldStatePath = $field->statePath;
+                    $schema
+                        ->each(function (Field $field) use (&$state, $statePath, $get, $actionNestingIndex, $livewire) {
+                            $fieldStatePath = $field->statePath;
 
-                        data_fill(
-                            $state,
-                            $fieldStatePath,
-                            data_get(
-                                $livewire->mountedFormComponentActionsData[$actionNestingIndex] ?? [],
-                                "{$statePath}.{$fieldStatePath}"
-                            ) ?? $get("{$statePath}.{$fieldStatePath}") ?? null
-                        );
-                    });
+                            data_fill(
+                                $state,
+                                $fieldStatePath,
+                                data_get(
+                                    $livewire->mountedFormComponentActionsData[$actionNestingIndex] ?? [],
+                                    "{$statePath}.{$fieldStatePath}"
+                                ) ?? $get("{$statePath}.{$fieldStatePath}") ?? null
+                            );
+                        });
 
                     return $state;
                 })
@@ -177,18 +180,11 @@ class LinkPickerInput extends Field
 
         $schema = $link->getSchema();
 
+        $routeParameters = $this->routeParameters($link->getRoute());
+
         // If the schema is empty, we'll check if there are any parameters
         if ($schema->isEmpty()) {
-            $route = $link->getRoute();
-
-            $schema = collect($route->signatureParameters())
-                ->filter(function (ReflectionParameter $parameter) {
-                    $className = Reflector::getParameterClassName($parameter);
-
-                    return $parameter->getType()
-                        && class_exists($className)
-                        && is_subclass_of($className, Model::class);
-                })
+            $schema = $routeParameters
                 ->map(function (ReflectionParameter $parameter) {
                     $model = Reflector::getParameterClassName($parameter);
 
@@ -198,12 +194,41 @@ class LinkPickerInput extends Field
                         ->searchable()
                         ->options($model::query()
                             ->when(method_exists($model, 'linkPickerParameterQuery'), fn ($query) => $model::linkPickerParameterQuery($query))
+                            ->withoutGlobalScopes()
                             ->pluck(
                                 $model::$linkPickerTitleField ?? 'id',
                                 (new $model)->getKeyName(),
                             )
-                        );
+                        )
+                        ->live();
                 });
+        }
+
+        if ($anchorData = $link->getWithAnchors()) {
+            if (! data_get($anchorData, 'parameter')) {
+                $anchorData['parameter'] = $routeParameters->first()->name;
+            }
+
+            if (! data_get($anchorData, 'model')) {
+                $anchorData['model'] = Reflector::getParameterClassName($routeParameters->first());
+            }
+
+            $schema->add(
+                Select::make('parameters.anchor')
+                    ->hidden(fn (Get $get) => ! $get("parameters.{$anchorData['parameter']}"))
+                    ->options(function (Get $get) use ($anchorData) {
+                        /**
+                         * @var Model $record
+                         */
+                        $record = $anchorData['model']::find($get("parameters.{$anchorData['parameter']}"));
+
+                        if (method_exists($record, 'isTranslatableAttribute') && $record->isTranslatableAttribute($anchorData['field'])) {
+                            return optional($record->getTranslation($anchorData['field'], referer_locale()))->anchorList();
+                        }
+
+                        return $record->{$anchorData['field']}->anchorList();
+                    })
+            );
         }
 
         return $schema
@@ -212,5 +237,21 @@ class LinkPickerInput extends Field
                 Checkbox::make('newTab')
                     ->label(__('filament-link-picker::input.new tab label'))
             );
+    }
+
+    protected function routeParameters(Optional|Route $route): Collection
+    {
+        if ($route instanceof Optional) {
+            return collect();
+        }
+
+        return collect($route->signatureParameters())
+            ->filter(function (ReflectionParameter $parameter) {
+                $className = Reflector::getParameterClassName($parameter);
+
+                return $parameter->getType()
+                    && class_exists($className)
+                    && is_subclass_of($className, Model::class);
+            });
     }
 }
