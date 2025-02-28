@@ -4,6 +4,7 @@ namespace Codedor\LinkPicker\Filament;
 
 use Codedor\LinkPicker\Facades\LinkCollection;
 use Codedor\LinkPicker\Link;
+use Codedor\LocaleCollection\Facades\LocaleCollection;
 use Filament\Forms\Components\Actions\Action;
 use Filament\Forms\Components\Checkbox;
 use Filament\Forms\Components\Component;
@@ -223,7 +224,11 @@ class LinkPickerInput extends Field
                         $record = $anchorData['model']::find($get("parameters.{$anchorData['parameter']}"));
 
                         if (method_exists($record, 'isTranslatableAttribute') && $record->isTranslatableAttribute($anchorData['field'])) {
-                            return optional($record->getTranslation($anchorData['field'], referer_locale()))->anchorList();
+                            $locale = referer_locale() ?? (class_exists(LocaleCollection::class)
+                                ? LocaleCollection::first()->locale()
+                                : 'en');
+
+                            return optional($record->getTranslation($anchorData['field'], $locale))->anchorList();
                         }
 
                         return $record->{$anchorData['field']}->anchorList();
