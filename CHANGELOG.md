@@ -5,6 +5,17 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## v1.6.0 - 2025-02-28
+
+### What's Changed
+
+* Bump dependabot/fetch-metadata from 2.2.0 to 2.3.0 by @dependabot in https://github.com/codedor/filament-link-picker/pull/30
+* Bump aglipanci/laravel-pint-action from 2.4 to 2.5 by @dependabot in https://github.com/codedor/filament-link-picker/pull/31
+* Upgrade to L12 by @jyrkidn in https://github.com/codedor/filament-link-picker/pull/33
+* Anchor field in settings, added a fallback by @AngryMoustache in https://github.com/codedor/filament-link-picker/pull/32
+
+**Full Changelog**: https://github.com/codedor/filament-link-picker/compare/v1.5.0...v1.6.0
+
 ## v1.5.0 - 2024-12-27
 
 ### What's Changed
