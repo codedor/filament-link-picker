@@ -20,3 +20,7 @@ parameters:
 			message: "#^Call to an undefined method Illuminate\\\\Support\\\\HigherOrderCollectionProxy\\<string, Codedor\\\\FilamentArchitect\\\\Engines\\\\Architect, Illuminate\\\\Support\\\\Collection\\<\\(int\\|string\\)\\, Codedor\\\\FilamentArchitect\\\\Engines\\\\Architect\\>\\>\\:\\:anchorList\\(\\)\\.$#"
 			count: 1
 			path: src/LinkCollection.php
+		-
+			message: "#^Property Codedor\\\\LinkPicker\\\\Filament\\\\LinkPickerInput\\:\\:\\$view \\(view-string\\) does not accept default value of type string\\.$#"
+			count: 1
+			path: src/Filament/LinkPickerInput.php
