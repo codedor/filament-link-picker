@@ -31,7 +31,7 @@ class LinkPickerInput extends Field
         parent::setUp();
 
         $this->registerActions([
-            Action::make('link-picker-modal')
+            \Filament\Actions\Action::make('link-picker-modal')
                 ->label(fn ($state) => $state
                     ? __('filament-link-picker::input.edit link')
                     : __('filament-link-picker::input.select link')
@@ -39,7 +39,7 @@ class LinkPickerInput extends Field
                 ->icon(fn ($state) => $state ? 'heroicon-o-pencil' : 'heroicon-o-plus')
                 ->color('gray')
                 ->iconSize('sm')
-                ->fillForm(function (Get $get, Component $component, \Livewire\Component $livewire): array {
+                ->fillForm(function (\Filament\Schemas\Components\Utilities\Get $get, \Filament\Schemas\Components\Component $component, \Livewire\Component $livewire): array {
                     $statePath = $component->getStatePath(false);
 
                     $schema = $this->getFormSchemaForRoute($get("{$statePath}.route"));
@@ -68,7 +68,7 @@ class LinkPickerInput extends Field
 
                     return $state;
                 })
-                ->form(function (Get $get, Component $component, \Livewire\Component $livewire, Form $form) {
+                ->schema(function (\Filament\Schemas\Components\Utilities\Get $get, \Filament\Schemas\Components\Component $component, \Livewire\Component $livewire, \Filament\Schemas\Schema $form) {
                     $statePath = $component->getStatePath(false);
 
                     $actionNestingIndex = array_key_last($livewire->mountedFormComponentActions);
@@ -99,16 +99,16 @@ class LinkPickerInput extends Field
 
                     return $schema->toArray();
                 })
-                ->action(function (Set $set, array $data, Component $component) {
+                ->action(function (\Filament\Schemas\Components\Utilities\Set $set, array $data, \Filament\Schemas\Components\Component $component) {
                     $set($component->getStatePath(false), $data);
                 }),
 
-            Action::make('link-picker-clear')
+            \Filament\Actions\Action::make('link-picker-clear')
                 ->label(__('filament-link-picker::input.remove link'))
                 ->icon('heroicon-o-trash')
                 ->iconSize('sm')
                 ->color('danger')
-                ->action(function (Set $set) {
+                ->action(function (\Filament\Schemas\Components\Utilities\Set $set) {
                     $set($this->getStatePath(false), null);
                 }),
         ]);
@@ -216,8 +216,8 @@ class LinkPickerInput extends Field
 
             $schema->add(
                 Select::make('parameters.anchor')
-                    ->hidden(fn (Get $get) => ! $get("parameters.{$anchorData['parameter']}"))
-                    ->options(function (Get $get) use ($anchorData) {
+                    ->hidden(fn (\Filament\Schemas\Components\Utilities\Get $get) => ! $get("parameters.{$anchorData['parameter']}"))
+                    ->options(function (\Filament\Schemas\Components\Utilities\Get $get) use ($anchorData) {
                         /**
                          * @var Model $record
                          */
