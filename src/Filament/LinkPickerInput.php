@@ -40,15 +40,16 @@ class LinkPickerInput extends Field
                     return [
                         Grid::make(1)->schema(function (\Livewire\Component $livewire) {
                             $mountedAction = Arr::last($livewire->mountedActions);
+                            $mountedActionIndex = array_key_last($livewire->mountedActions);
                             $schema = $this->getFormSchemaForRoute($mountedAction['data']['route'] ?? null);
 
                             // since the fields are dynamic we have to fill the state manually,
                             // else validation will fail because property is not in the state
-                            data_fill($livewire, 'mountedActions.0.data.parameters', []);
-                            $schema->each(function (Field $field) use (&$livewire) {
+                            data_fill($livewire, "mountedActions.{$mountedActionIndex}.data.parameters", []);
+                            $schema->each(function (Field $field) use (&$livewire, $mountedActionIndex) {
                                 data_fill(
                                     $livewire,
-                                    "mountedActions.0.data.{$field->statePath}",
+                                    "mountedActions.{$mountedActionIndex}.data.{$field->statePath}",
                                     null,
                                 );
                             });
