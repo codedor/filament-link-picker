@@ -5,6 +5,18 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## v1.7.0 - 2025-11-20
+
+### What's Changed
+
+* Bump dependabot/fetch-metadata from 2.3.0 to 2.4.0 by @dependabot[bot] in https://github.com/codedor/filament-link-picker/pull/36
+* Bump aglipanci/laravel-pint-action from 2.5 to 2.6 by @dependabot[bot] in https://github.com/codedor/filament-link-picker/pull/39
+* Bump stefanzweifel/git-auto-commit-action from 5 to 7 by @dependabot[bot] in https://github.com/codedor/filament-link-picker/pull/41
+* Bump actions/checkout from 4 to 5 by @dependabot[bot] in https://github.com/codedor/filament-link-picker/pull/40
+* Add Dutch translations by @jyrkidn in https://github.com/codedor/filament-link-picker/pull/35
+
+**Full Changelog**: https://github.com/codedor/filament-link-picker/compare/v1.6.0...v1.7.0
+
 ## v1.6.0 - 2025-02-28
 
 ### What's Changed
